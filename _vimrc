@@ -16,7 +16,7 @@ map <A-l> <Esc>:NERDTreeToggle<CR>
 autocmd FileType * set tabstop=2|set shiftwidth=2|set noexpandtab
 autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
 set softtabstop=4   " makes the spaces feel like real tabs
-autocmd FileType python set complete+=k~/.vim/syntax/python.vim isk+=.,(
+" autocmd FileType python set complete+=k~/.vim/syntax/python.vim isk+=.,(
 
 let NERDTreeIgnore=['\.pyc']
 if has("win32")
