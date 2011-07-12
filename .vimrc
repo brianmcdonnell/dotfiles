@@ -1,5 +1,6 @@
 syntax on
 colorscheme desert
+set nowrap
 
 " Alt-arrows to navigate between buffers
 map <A-left> <C-W>h
@@ -13,14 +14,16 @@ map <C-S-Tab> <Esc>:bprevious!<CR>
 map <A-l> <Esc>:NERDTreeToggle<CR>
 
 " autocmd BufEnter *.py set ai sw=4 ts=4 sta et fo=croql
-autocmd FileType * set tabstop=2|set shiftwidth=2|set noexpandtab
-autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
-set softtabstop=4   " makes the spaces feel like real tabs
+autocmd BufRead,BufNewFile *.as set filetype=actionscript
+autocmd FileType * set tabstop=4|set shiftwidth=4|set expandtab
 " autocmd FileType python set complete+=k~/.vim/syntax/python.vim isk+=.,(
+
+" Show tabs as arrows and trailing spaces as dots
+set list listchars=tab:→\ ,trail:·
 
 let NERDTreeIgnore=['\.pyc']
 if has("win32")
-		map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+    map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
 endif
 
 " Case-insensitive searches
@@ -44,3 +47,6 @@ if has("gui_running")
 else
   set background=dark
 endif
+
+" Remove trailing whitespace
+:command NoTrails %s/\s\+$//
