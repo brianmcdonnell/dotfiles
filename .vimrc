@@ -13,10 +13,18 @@ map <C-S-Tab> <Esc>:bprevious!<CR>
 " Map Alt-L for NerdTree
 map <A-l> <Esc>:NERDTreeToggle<CR>
 
+" Load plugins for filetypes
+filetype plugin indent on
+" Load indent file for filetypes
+" filetype indent on
+
 " autocmd BufEnter *.py set ai sw=4 ts=4 sta et fo=croql
 autocmd BufRead,BufNewFile *.as set filetype=actionscript
 autocmd FileType * set tabstop=4|set shiftwidth=4|set expandtab
-" autocmd FileType python set complete+=k~/.vim/syntax/python.vim isk+=.,(
+
+" Enable code folding
+set foldmethod=indent
+set foldlevel=99
 
 " Show tabs as arrows and trailing spaces as dots
 set list listchars=tab:→\ ,trail:·
@@ -40,7 +48,6 @@ set mouse=a
 
 " Toggle line numbers and fold column for easy copying:
 nnoremap <F2> :set nonumber!<CR> 
-":set foldcolumn=0<CR>
 
 if has("gui_running")
   colorscheme desert
@@ -49,4 +56,4 @@ else
 endif
 
 " Remove trailing whitespace
-:command NoTrails %s/\s\+$//
+command! NoTrails %s/\s\+$//
