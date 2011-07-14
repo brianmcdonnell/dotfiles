@@ -29,6 +29,10 @@ set foldlevel=99
 " Show tabs as arrows and trailing spaces as dots
 set list listchars=tab:→\ ,trail:·
 
+" Show red background for code over 80 chars long
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
 let NERDTreeIgnore=['\.pyc']
 if has("win32")
     map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
