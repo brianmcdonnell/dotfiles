@@ -1,3 +1,6 @@
+" Keystroke namespace under which to map user-defined commands.
+let mapleader = ","
+
 syntax on
 colorscheme desert
 set nowrap
@@ -29,10 +32,6 @@ set foldlevel=99
 " Show tabs as arrows and trailing spaces as dots
 set list listchars=tab:→\ ,trail:·
 
-" Show red background for code over 80 chars long
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
-
 let NERDTreeIgnore=['\.pyc']
 if has("win32")
     map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
@@ -51,13 +50,18 @@ set number
 set mouse=a
 
 " Toggle line numbers and fold column for easy copying:
-nnoremap <F2> :set nonumber!<CR> 
+nnoremap <F2> :set nonumber!<CR>
 
 if has("gui_running")
   colorscheme desert
 else
-  set background=dark
+  set background = dark
 endif
 
+" Show red background for code over 80 chars long
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
 " Remove trailing whitespace
-command! NoTrails %s/\s\+$//
+" command! NoTrails %s/\s\+$//
+nnoremap<leader>ws :%s/\s\+$//<cr>:let @/=''<CR>
