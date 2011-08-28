@@ -1,0 +1,19 @@
+[user]
+        name = Brian McDonnell
+        email = mcdonnellb@gmail.com
+
+[color]
+        branch = auto
+        diff = auto
+        interactive = auto
+        status = auto
+#[core]
+#        editor = vim
+#[merge]
+#        tool = vimdiff
+[alias]
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+

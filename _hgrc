@@ -1,0 +1,11 @@
+[ui]
+username = Brian McDonnell <mcdonnellb@gmail.com>
+
+[extensions]
+hgext.bookmarks =
+hggit = 
+color =
+hgext.graphlog = 
+hgext.churn=
+hgext.convert=
+
