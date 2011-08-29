@@ -5,9 +5,9 @@ call pathogen#helptags()
 
 " Set colors depending on gvim or vim
 if has("gui_running")
-  colorscheme desert
+    colorscheme desert
 else
-  "set background = black
+    colorscheme torte
 endif
 
 " Enable syntax highlighting
@@ -64,6 +64,23 @@ map <leader>g :GundoToggle<CR>
 
 " ,td for TaskList
 map <leader>td <Plug>TaskList
+
+" Supertab code completion
+au FileType python set omnifunc=pythoncomplete#Complete
+let g:SuperTabDefaultCompletionType = "context"
+set completeopt=menuone,longest,preview
+
+" Validate code against PEP8
+let g:pep8_map='<leader>8'
+" map <leader>8 g:pep8_map
+
+" Jump to definition
+map <leader>j :RopeGotoDefinition<CR>
+" Rename occurances of...
+map <leader>r :RopeRename<CR>
+
+" Fuzzy search in code
+nmap <leader>a <Esc>:Ack!
 
 " Show tabs as arrows and trailing spaces as dots
 " set list listchars=tab:→\ ,trail:·
