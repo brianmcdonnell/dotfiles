@@ -17,3 +17,6 @@
     br = branch
     co = checkout
 
+
+[core]
+	excludesfile = ~/.cvsignore

@@ -1,3 +1,13 @@
+filetype off
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
+" Load plugins for filetypes
+filetype plugin indent on
+" Load indent file for filetypes
+" filetype indent on
+
 " Keystroke namespace under which to map user-defined commands.
 let mapleader = ","
 
@@ -16,10 +26,8 @@ map <C-S-Tab> <Esc>:bprevious!<CR>
 " Map Alt-L for NerdTree
 map <A-l> <Esc>:NERDTreeToggle<CR>
 
-" Load plugins for filetypes
-filetype plugin indent on
-" Load indent file for filetypes
-" filetype indent on
+" ,td for TaskList
+map <leader>td <Plug>TaskList
 
 " autocmd BufEnter *.py set ai sw=4 ts=4 sta et fo=croql
 autocmd BufRead,BufNewFile *.as set filetype=actionscript
@@ -30,7 +38,7 @@ set foldmethod=indent
 set foldlevel=99
 
 " Show tabs as arrows and trailing spaces as dots
-set list listchars=tab:→\ ,trail:·
+" set list listchars=tab:→\ ,trail:·
 
 let NERDTreeIgnore=['\.pyc']
 if has("win32")
@@ -63,5 +71,5 @@ highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
 
 " Remove trailing whitespace
-" command! NoTrails %s/\s\+$//
-nnoremap<leader>ws :%s/\s\+$//<cr>:let @/=''<CR>
+command! NoTrails %s/\s\+$//
+" nnoremap<leader>ws :%s/\s\+$//<cr>:let @/=''<CR>
