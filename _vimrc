@@ -3,12 +3,19 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-" Load plugins for filetypes
-filetype plugin indent on
-" Load indent file for filetypes
-" filetype indent on
+" Set colors depending on gvim or vim
+if has("gui_running")
+  colorscheme desert
+else
+  "set background = black
+endif
 
-" autocmd BufEnter *.py set ai sw=4 ts=4 sta et fo=croql
+" Enable syntax highlighting
+syntax on
+" Filtype detection, load plugin files, load indent files
+filetype plugin indent on
+
+autocmd BufEnter *.py set ai sw=4 ts=4 sta et fo=croql
 autocmd BufRead,BufNewFile *.as set filetype=actionscript
 autocmd FileType * set tabstop=4|set shiftwidth=4|set expandtab
 
@@ -22,16 +29,6 @@ map <A-up> <C-W>k
 map <A-down> <C-W>j
 map <C-Tab> <Esc>:bnext!<CR>
 map <C-S-Tab> <Esc>:bprevious!<CR>
-
-" Set colors depending on gvim or vim
-if has("gui_running")
-  colorscheme desert
-else
-  "set background = black
-endif
-
-" Enable syntax highlighting
-syntax on
 
 " Disable text wrapping
 set nowrap
