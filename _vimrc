@@ -62,6 +62,9 @@ match OverLength /\%81v.\+/
 " Map Alt-L for NerdTree
 map <A-l> <Esc>:NERDTreeToggle<CR>
 
+" Toggle Gundo
+map <leader>g :GundoToggle<CR>
+
 " ,td for TaskList
 map <leader>td <Plug>TaskList
 
