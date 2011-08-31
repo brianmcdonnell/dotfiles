@@ -72,18 +72,23 @@ set completeopt=menuone,longest,preview
 
 " Validate code against PEP8
 let g:pep8_map='<leader>8'
-" map <leader>8 g:pep8_map
 
 " Jump to definition
 map <leader>j :RopeGotoDefinition<CR>
 " Rename occurances of...
 map <leader>r :RopeRename<CR>
 
+let g:pyflakes_use_quickfix = 0
+
 " Fuzzy search in code
 nmap <leader>a <Esc>:Ack!
 
 " Show tabs as arrows and trailing spaces as dots
-" set list listchars=tab:→\ ,trail:·
+if has("win32")
+    set list listchars=tab:�\ ,trail:�
+else
+    set list listchars=tab:→\ ,trail:·
+endif
 
 let NERDTreeIgnore=['\.pyc']
 if has("win32")
