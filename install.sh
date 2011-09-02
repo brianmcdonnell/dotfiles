@@ -18,6 +18,17 @@ function error() {
     echo -e ${txtred}$1${txtrst};
 }
 
+# Make a guess at the os
+os_name=`uname -s`
+if [ "Linux" == $os_name ]; then
+    os_name="LINUX"
+elif [ "CYGWIN" == ${os_name:0:6} ]; then
+    os_name="CYGWIN"
+else
+    os_name="MAC_OS"
+fi
+info "$os_name detected"
+
 # Checks if the argument exists as a command in the PATH
 function command_exists() {
     if type "$1" &> /dev/null; then
@@ -43,10 +54,22 @@ function dependencies_exist() {
     return $__result
 }
 
+function link_file {
+    source="$1"
+    target="$2"
+    # If the target exists as a symlink, directory or file, move it to the bkp dir
+    if [ -e "${target}" ] || [ -d "${target}" ] || [ -f "${target}" ] ; then
+        mv $target $bkp_dir
+    fi
+
+    ln -sf ${source} ${target}
+}
+
 script_reqs=(   "grep"
                 "sed"
                 "tail"
                 "sort"
+                "date"
                 );
 info "Install script requires the following programs"
 req_list=`echo ${script_reqs[@]}`
@@ -80,6 +103,7 @@ fi
 # The following programs are required by the installed bundles
 plugin_reqs=(   "ack"       # Used by vim Ack plugin
                 "pydoc"     # Used by vim Pydoc plugin
+                "pep8"      # Used by PEP8 plugin
                 "ruby"      # Used by vim Command-T plugin
                 "rake"      # Used by vim Command-T plugin
                 );
@@ -153,7 +177,63 @@ if [ "$?" != 0 ]; then
 fi
 
 # Update all submodules
-# Run rake make
-# Backup any existing files to dated directory
-# Create a .file symlink to each _file conterpart.
+info "Updating all submodules bundles"
+git submodule sync
+git submodule update --init --recursive
 
+# Check that ruby-dev / ruby-dev-kit is installed.
+info "Checking for ruby-dev / ruby-dev-kit"
+ruby -e "require 'mkmf'"
+if [ "$?" == 0 ]; then
+    success "ruby-dev is available"
+else
+    if [ $os_name == "CYGWIN" ]; then
+        error "Please install ruby dev kit: http://rubyinstaller.org/add-ons/devkit/"
+    else
+        error "Please install ruby dev: apt-get install $ruby_ver-dev"
+    fi
+    exit 1
+fi
+
+
+#Build command-t ruby extensions
+info "Building command-t ruby C extensions"
+start_dir=`pwd`
+cd _vim/bundle/command-t
+rake make
+if [ "$?" == 0 ]; then
+    success "Command-T ruby c extension built"
+else
+    error "Building Command-T ruby c extension failed"
+    exit 1
+fi
+cd $start_dir
+
+# Backup any existing files to dated directory
+bkp_time=`date +"%Y-%b-%d-%H:%M:%S.%N"`
+bkp_dir="${HOME}/.dotfiles-bkp/$bkp_time"
+info "Creating backup directory"
+mkdir -p "$bkp_dir"
+if [ "$?" == 0 ]; then
+    success "Created backup directory: $bkp_dir"
+else
+    error "Failed to create backup directory: $bkp_dir"
+    exit 1
+fi
+
+# Create a .file symlink to each _file conterpart
+info "Creating symlinks to all relevant dotfiles."
+info "Any existing files will be backed up."
+for i in _*
+do
+    s="$i"
+    t="$i"
+    # .vim directory is called .vimfiles on windows
+    if [ os_name == "CYGWIN" ] && [ "_vim" == $s ]; then
+        t="_vimfiles"
+    fi
+    link_file "${PWD}/$s" "${HOME}/${t/_/.}"
+done
+success "Done!"
+
+# Accept arguments to this script to modify behaviour
