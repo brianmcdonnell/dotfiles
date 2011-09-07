@@ -55,14 +55,59 @@ function dependencies_exist() {
 }
 
 function link_file {
-    source="$1"
-    target="$2"
-    # If the target exists as a symlink, directory or file, move it to the bkp dir
-    if [ -e "${target}" ] || [ -d "${target}" ] || [ -f "${target}" ] ; then
-        mv $target $bkp_dir
+    local real_file="$1"
+    local link="$2"
+        
+    if [ os_name != "CYGWIN" ] ; then
+        # This will be executed from within a bash context
+        # We need to use the command.com mklink to create
+        # a valid windows symlink
+        local win_real=`cygpath -w "$real_file"`
+        local win_link=`cygpath -w "$link"`
+        info "Linking: $win_link --> $win_real"
+        if [ -d $real_file ]; then
+            cmd /c mklink /D "$win_link" "$win_real"
+        else
+            cmd /c mklink "$win_link" "$win_real"
+        fi
+    else
+        info "Linking: $link --> $real_file"
+        # ln TARGET LINK_NAME
+        ln -sf ${real_file} ${link}
     fi
 
-    ln -sf ${source} ${target}
+}
+
+function underscore_files()
+{
+    for i in _*
+    do
+        local real_file="$i"
+        local link="$i"
+        # '.vim' directory is called 'vimfiles' on windows
+        info $real_file
+        echo $os_name
+        if [ "CYGWIN" == $os_name ] && [ "_vim" == $real_file ]; then
+            error "here"
+            link="vimfiles"
+        fi
+        
+        if [ $1 == "backup" ]; then
+            # If the link exists as a symlink, directory or file, move it to the bkp dir
+            local bkp_file="$homedir/${link/_/.}"
+            if [ -e "$bkp_file" ] || [ -d "$bkp_file" ] || [ -f "$bkp_file" ] ; then
+                local bkp_file="$homedir/${link/_/.}"
+                info "Backing up: $bkp_file"
+                mv $bkp_file $bkp_dir
+            fi
+        elif [ $1 == "link" ]; then
+            # Attach links
+            real_path=${PWD}/$real_file
+            link_file "${real_path}" "$homedir/${link/_/.}"
+        else
+            error "underscore_files: Invalid argument"
+        fi
+    done
 }
 
 script_reqs=(   "grep"
@@ -70,6 +115,7 @@ script_reqs=(   "grep"
                 "tail"
                 "sort"
                 "date"
+                "git"
                 );
 info "Install script requires the following programs"
 req_list=`echo ${script_reqs[@]}`
@@ -105,7 +151,6 @@ plugin_reqs=(   "ack"       # Used by vim Ack plugin
                 "pydoc"     # Used by vim Pydoc plugin
                 "pep8"      # Used by PEP8 plugin
                 "ruby"      # Used by vim Command-T plugin
-                "rake"      # Used by vim Command-T plugin
                 );
 
 # If ruby is in the requirements we need to check the
@@ -117,8 +162,13 @@ for i in ${plugin_reqs[@]}; do
     fi;
 done
 
-
 function compare_ruby_versions() {
+    if [ os_name != "CYGWIN" ] && [ $2 == 'gvim' ]; then
+        warn "Unable to auto detect which version of ruby gvim is compiled for on windows."
+        warn "Run 'gvim --version' and search for '-DDYNAMIC_RUBY_VER=' to check manually."
+        return 0
+    fi
+    
     vim_ruby_ver=`$2 --version | grep -io "ruby[0-9\.]*" | sort | tail -n 1`
     if [ $vim_ruby_ver ]; then
         echo -n "$2 requires:   "
@@ -152,11 +202,15 @@ if [ $ruby_required == true ] ; then
         compare_ruby_versions $ruby_ver 'vim'
         vim_ruby_ok=$?
     fi
+    
     if $gvim_exists; then
-        compare_ruby_versions $ruby_ver 'gvim'
-        gvim_ruby_ok=$?
+        gvim_ruby_ok=true
+        if [ os_name != "CYGWIN" ] ; then
+            compare_ruby_versions $ruby_ver 'gvim'
+            gvim_ruby_ok=$?
+        fi
     fi
-
+    
     if [ vim_ruby_ok == 2 ] && [ gvim_ruby_ok == 2 ]; then
         error "Neither vim nor gvim are compiled with ruby support."
     fi
@@ -178,40 +232,36 @@ fi
 
 # Update all submodules
 info "Updating all submodules bundles"
-git submodule sync
-git submodule update --init --recursive
+#git submodule sync
+#git submodule update --init --recursive
 
-# Check that ruby-dev / ruby-dev-kit is installed.
-info "Checking for ruby-dev / ruby-dev-kit"
-ruby -e "require 'mkmf'"
-if [ "$?" == 0 ]; then
-    success "ruby-dev is available"
-else
+# Check that the Command-T ruby extensions are compiled.
+if [ ! -f "./_vim/bundle/command-t/ruby/command-t/ext.so" ]; then
+    error "Command-T ruby extension has not been compiled"
     if [ $os_name == "CYGWIN" ]; then
         error "Please install ruby dev kit: http://rubyinstaller.org/add-ons/devkit/"
+        error "Run"
+        error "> c: rubydevkit\devkitvars.bat"
+        error "> cd .\_vim\bundle\command-t\ruby\command-t"
+        error "> ruby 'extconf.rb'"
+        error "> make clean"
+        error "> make"
     else
-        error "Please install ruby dev: apt-get install $ruby_ver-dev"
+        error "$ cd ./_vim/bundle/command-t/ruby/command-t"
+        error "$ rake make"
     fi
     exit 1
 fi
 
-
-#Build command-t ruby extensions
-info "Building command-t ruby C extensions"
-start_dir=`pwd`
-cd _vim/bundle/command-t
-rake make
-if [ "$?" == 0 ]; then
-    success "Command-T ruby c extension built"
+if [ os_name != "CYGWIN" ] ; then
+    homedir=${USERPROFILE}
 else
-    error "Building Command-T ruby c extension failed"
-    exit 1
+    homedir=${HOME}
 fi
-cd $start_dir
 
 # Backup any existing files to dated directory
 bkp_time=`date +"%Y-%b-%d-%H:%M:%S.%N"`
-bkp_dir="${HOME}/.dotfiles-bkp/$bkp_time"
+bkp_dir="$homedir/.dotfiles-bkp/$bkp_time"
 info "Creating backup directory"
 mkdir -p "$bkp_dir"
 if [ "$?" == 0 ]; then
@@ -222,18 +272,11 @@ else
 fi
 
 # Create a .file symlink to each _file conterpart
+info "Backing up existing files"
+underscore_files 'backup'
 info "Creating symlinks to all relevant dotfiles."
-info "Any existing files will be backed up."
-for i in _*
-do
-    s="$i"
-    t="$i"
-    # .vim directory is called .vimfiles on windows
-    if [ os_name == "CYGWIN" ] && [ "_vim" == $s ]; then
-        t="_vimfiles"
-    fi
-    link_file "${PWD}/$s" "${HOME}/${t/_/.}"
-done
+underscore_files 'link'
+
 success "Done!"
 
 # Accept arguments to this script to modify behaviour
