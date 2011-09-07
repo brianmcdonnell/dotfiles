@@ -229,8 +229,8 @@ fi
 
 # Update all submodules
 info "Updating all submodules bundles"
-#git submodule sync
-#git submodule update --init --recursive
+git submodule sync
+git submodule update --init --recursive
 
 # Check that the Command-T ruby extensions are compiled.
 if [ ! -f "./_vim/bundle/command-t/ruby/command-t/ext.so" ]; then
