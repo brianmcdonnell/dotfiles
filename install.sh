@@ -85,10 +85,7 @@ function underscore_files()
         local real_file="$i"
         local link="$i"
         # '.vim' directory is called 'vimfiles' on windows
-        info $real_file
-        echo $os_name
         if [ "CYGWIN" == $os_name ] && [ "_vim" == $real_file ]; then
-            error "here"
             link="vimfiles"
         fi
         
