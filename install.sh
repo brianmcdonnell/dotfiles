@@ -57,7 +57,7 @@ function dependencies_exist() {
 function link_file {
     local real_file="$1"
     local link="$2"
-        
+
     if [ os_name != "CYGWIN" ] ; then
         # This will be executed from within a bash context
         # We need to use the command.com mklink to create
@@ -88,7 +88,7 @@ function underscore_files()
         if [ "CYGWIN" == $os_name ] && [ "_vim" == $real_file ]; then
             link="vimfiles"
         fi
-        
+
         if [ $1 == "backup" ]; then
             # If the link exists as a symlink, directory or file, move it to the bkp dir
             local bkp_file="$homedir/${link/_/.}"
@@ -165,7 +165,7 @@ function compare_ruby_versions() {
         warn "Run 'gvim --version' and search for '-DDYNAMIC_RUBY_VER=' to check manually."
         return 0
     fi
-    
+
     vim_ruby_ver=`$2 --version | grep -io "ruby[0-9\.]*" | sort | tail -n 1`
     if [ $vim_ruby_ver ]; then
         echo -n "$2 requires:   "
@@ -199,7 +199,7 @@ if [ $ruby_required == true ] ; then
         compare_ruby_versions $ruby_ver 'vim'
         vim_ruby_ok=$?
     fi
-    
+
     if $gvim_exists; then
         gvim_ruby_ok=true
         if [ os_name != "CYGWIN" ] ; then
@@ -207,7 +207,7 @@ if [ $ruby_required == true ] ; then
             gvim_ruby_ok=$?
         fi
     fi
-    
+
     if [ vim_ruby_ok == 2 ] && [ gvim_ruby_ok == 2 ]; then
         error "Neither vim nor gvim are compiled with ruby support."
     fi
