@@ -119,7 +119,7 @@ function underscore_files()
 # Compares the available ruby version with the versions needed by vim/gvim.
 # This comparison cannot be done for gvim on Windows.
 function compare_ruby_versions() {
-    if [ $os_name != "CYGWIN" ] && [ $2 == 'gvim' ]; then
+    if [ $os_name == "CYGWIN" ] && [ $2 == 'gvim' ]; then
         warn "Unable to auto detect which version of ruby gvim is compiled for on windows."
         warn "Run 'gvim --version' and search for '-DDYNAMIC_RUBY_VER=' to check manually."
         return 0
