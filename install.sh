@@ -58,7 +58,7 @@ function link_file {
     local real_file="$1"
     local link="$2"
 
-    if [ os_name != "CYGWIN" ] ; then
+    if [ os_name == "CYGWIN" ] ; then
         # This will be executed from within a bash context
         # We need to use the command.com mklink to create
         # a valid windows symlink
@@ -250,7 +250,7 @@ if [ ! -f "./_vim/bundle/command-t/ruby/command-t/ext.so" ]; then
     exit 1
 fi
 
-if [ os_name != "CYGWIN" ] ; then
+if [ os_name == "CYGWIN" ] ; then
     homedir=${USERPROFILE}
 else
     homedir=${HOME}
