@@ -58,7 +58,7 @@ function link_file {
     local real_file="$1"
     local link="$2"
 
-    if [ os_name == "CYGWIN" ] ; then
+    if [ $os_name == "CYGWIN" ] ; then
         # This will be executed from within a bash context
         # We need to use the command.com mklink to create
         # a valid windows symlink
@@ -160,7 +160,7 @@ for i in ${plugin_reqs[@]}; do
 done
 
 function compare_ruby_versions() {
-    if [ os_name != "CYGWIN" ] && [ $2 == 'gvim' ]; then
+    if [ $os_name != "CYGWIN" ] && [ $2 == 'gvim' ]; then
         warn "Unable to auto detect which version of ruby gvim is compiled for on windows."
         warn "Run 'gvim --version' and search for '-DDYNAMIC_RUBY_VER=' to check manually."
         return 0
@@ -202,17 +202,17 @@ if [ $ruby_required == true ] ; then
 
     if $gvim_exists; then
         gvim_ruby_ok=true
-        if [ os_name != "CYGWIN" ] ; then
+        if [ $os_name != "CYGWIN" ] ; then
             compare_ruby_versions $ruby_ver 'gvim'
             gvim_ruby_ok=$?
         fi
     fi
 
-    if [ vim_ruby_ok == 2 ] && [ gvim_ruby_ok == 2 ]; then
+    if [ $vim_ruby_ok == 2 ] && [ $gvim_ruby_ok == 2 ]; then
         error "Neither vim nor gvim are compiled with ruby support."
     fi
 
-    if [ vim_ruby_ok != 0 ] || [ gvim_ruby_ok != 0 ]; then
+    if [ $vim_ruby_ok != 0 ] || [ $gvim_ruby_ok != 0 ]; then
         warn "Inexact match. vim/gvim plugins relying on ruby may not work correctly."
     fi
 else
@@ -230,7 +230,15 @@ fi
 # Update all submodules
 info "Updating all submodules bundles"
 git submodule sync
+if [ "$?" != 0 ]; then
+    error "git submodule sync failed."
+    exit 1
+fi
 git submodule update --init --recursive
+if [ "$?" != 0 ]; then
+    error "git submodule update failed."
+    exit 1
+fi
 
 # Check that the Command-T ruby extensions are compiled.
 if [ ! -f "./_vim/bundle/command-t/ruby/command-t/ext.so" ]; then
@@ -250,7 +258,7 @@ if [ ! -f "./_vim/bundle/command-t/ruby/command-t/ext.so" ]; then
     exit 1
 fi
 
-if [ os_name == "CYGWIN" ] ; then
+if [ $os_name == "CYGWIN" ] ; then
     homedir=${USERPROFILE}
 else
     homedir=${HOME}
