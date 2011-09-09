@@ -29,6 +29,13 @@ else
 fi
 info "$os_name detected"
 
+# Determine where the dotfiles should be deployed.
+if [ $os_name == "CYGWIN" ] ; then
+    homedir=${USERPROFILE}
+else
+    homedir=${HOME}
+fi
+
 # Checks if the argument exists as a command in the PATH
 function command_exists() {
     if type "$1" &> /dev/null; then
@@ -54,6 +61,7 @@ function dependencies_exist() {
     return $__result
 }
 
+# Creates a native OS symbolic link
 function link_file {
     local real_file="$1"
     local link="$2"
@@ -75,9 +83,10 @@ function link_file {
         # ln TARGET LINK_NAME
         ln -sf ${real_file} ${link}
     fi
-
 }
 
+# Performs an operation on each file/dir beginning with an underscore in the dotfiles dir.
+# First argument specifies teh operation to be performed.
 function underscore_files()
 {
     for i in _*
@@ -107,6 +116,33 @@ function underscore_files()
     done
 }
 
+# Compares the available ruby version with the versions needed by vim/gvim.
+# This comparison cannot be done for gvim on Windows.
+function compare_ruby_versions() {
+    if [ $os_name != "CYGWIN" ] && [ $2 == 'gvim' ]; then
+        warn "Unable to auto detect which version of ruby gvim is compiled for on windows."
+        warn "Run 'gvim --version' and search for '-DDYNAMIC_RUBY_VER=' to check manually."
+        return 0
+    fi
+
+    vim_ruby_ver=`$2 --version | grep -io "ruby[0-9\.]*" | sort | tail -n 1`
+    if [ $vim_ruby_ver ]; then
+        echo -n "$2 requires:   "
+        info "\t$vim_ruby_ver"
+    else
+        error "$2 not compiled for ruby."
+        return 2
+    fi
+
+    if [ $1 == $vim_ruby_ver ]; then
+        echo -n "$2 ruby"
+        success " [OK]"
+        return 0
+    fi
+    return 1
+}
+
+# This script needs the following tools to be available in the system path.
 script_reqs=(   "grep"
                 "sed"
                 "tail"
@@ -159,30 +195,7 @@ for i in ${plugin_reqs[@]}; do
     fi;
 done
 
-function compare_ruby_versions() {
-    if [ $os_name != "CYGWIN" ] && [ $2 == 'gvim' ]; then
-        warn "Unable to auto detect which version of ruby gvim is compiled for on windows."
-        warn "Run 'gvim --version' and search for '-DDYNAMIC_RUBY_VER=' to check manually."
-        return 0
-    fi
-
-    vim_ruby_ver=`$2 --version | grep -io "ruby[0-9\.]*" | sort | tail -n 1`
-    if [ $vim_ruby_ver ]; then
-        echo -n "$2 requires:   "
-        info "\t$vim_ruby_ver"
-    else
-        error "$2 not compiled for ruby."
-        return 2
-    fi
-
-    if [ $1 == $vim_ruby_ver ]; then
-        echo -n "$2 ruby"
-        success " [OK]"
-        return 0
-    fi
-    return 1
-}
-
+# Validate installed ruby version against those that vim & gvim are compiled against.
 if [ $ruby_required == true ] ; then
     info "Checking ruby availability"
     ruby_ver=`ruby --version | grep -o "\bruby [0-9\.]*" | sed "s/ruby /ruby/"`
@@ -199,7 +212,6 @@ if [ $ruby_required == true ] ; then
         compare_ruby_versions $ruby_ver 'vim'
         vim_ruby_ok=$?
     fi
-
     if $gvim_exists; then
         gvim_ruby_ok=true
         if [ $os_name != "CYGWIN" ] ; then
@@ -219,6 +231,7 @@ else
     info "Skipping ruby validation as it's not required by bundle plugins."
 fi
 
+# Check that all external programs needed by the bundles are available in the system path.
 info "Checking bundle dependencies"
 req_list=`echo ${plugin_reqs[@]}`
 dependencies_exist $req_list
@@ -227,7 +240,7 @@ if [ "$?" != 0 ]; then
     exit 1
 fi
 
-# Update all submodules
+# Update all bundle submodules
 info "Updating all submodules bundles"
 git submodule sync
 if [ "$?" != 0 ]; then
@@ -252,16 +265,11 @@ if [ ! -f "./_vim/bundle/command-t/ruby/command-t/ext.so" ]; then
         error "> make clean"
         error "> make"
     else
+        error "Run"
         error "$ cd ./_vim/bundle/command-t/ruby/command-t"
         error "$ rake make"
     fi
     exit 1
-fi
-
-if [ $os_name == "CYGWIN" ] ; then
-    homedir=${USERPROFILE}
-else
-    homedir=${HOME}
 fi
 
 # Backup any existing files to dated directory
@@ -282,6 +290,7 @@ underscore_files 'backup'
 info "Creating symlinks to all relevant dotfiles."
 underscore_files 'link'
 
+# Report success
 success "Done!"
 
-# Accept arguments to this script to modify behaviour
+# TODO: Accept arguments to this script to modify behaviour
