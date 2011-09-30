@@ -18,6 +18,7 @@ filetype plugin indent on
 autocmd BufEnter *.py set ai sw=4 ts=4 sta et fo=croql
 autocmd BufRead,BufNewFile *.as set filetype=actionscript
 autocmd FileType * set tabstop=4|set shiftwidth=4|set expandtab
+au! BufRead,BufNewFile *.json set filetype=json foldmethod=syntax 
 
 " Keystroke namespace under which to map user-defined commands.
 let mapleader = ","
@@ -32,6 +33,13 @@ map <C-S-Tab> <Esc>:bprevious!<CR>
 
 " Disable text wrapping
 set nowrap
+" Wrap toggle on/off
+map <leader>w :set wrap!<bar>set wrap?<CR>
+
+" Enable search highlighting
+set hlsearch
+" Search highlighting toggle on/off
+map <leader>h :set hlsearch!<bar>set hlsearch?<CR>
 
 " Enable code folding
 set foldmethod=indent
