@@ -31,6 +31,9 @@ map <A-down> <C-W>j
 map <C-Tab> <Esc>:bnext!<CR>
 map <C-S-Tab> <Esc>:bprevious!<CR>
 
+" Generally ignore these file types in file listings.
+set wildignore+=*.o,*.obj,.git,*.pyc
+
 " Disable text wrapping
 set nowrap
 " Wrap toggle on/off
