@@ -1,0 +1,11 @@
+# A global ignore file that will be applied to all hg repos.
+#
+# Project-specific ignore should still be added to .hgignore file
+# in the relevant project.  The ~/.hgignore however is useful for
+# ignoring files created by the developer-specific toolchain.
+
+# use glob syntax.
+syntax: glob
+
+.ropeproject
+*.swp
