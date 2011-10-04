@@ -1,5 +1,6 @@
 [ui]
 username = Brian McDonnell <mcdonnellb@gmail.com>
+ignore = ~/.hgignore
 
 [extensions]
 hgext.bookmarks =
