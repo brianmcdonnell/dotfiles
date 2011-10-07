@@ -4,7 +4,6 @@ ignore = ~/.hgignore
 
 [extensions]
 hgext.bookmarks =
-hggit = 
 color =
 hgext.graphlog = 
 hgext.churn=
