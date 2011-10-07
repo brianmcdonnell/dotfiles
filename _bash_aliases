@@ -1,0 +1,20 @@
+
+# enable color support of ls and also add handy aliases
+if [ "$TERM" != "dumb" ] && [ -x /usr/bin/dircolors ]; then
+    eval "`dircolors -b`"
+    alias ls='ls --color=auto'
+    #alias dir='ls --color=auto --format=vertical'
+    #alias vdir='ls --color=auto --format=long'
+
+    alias grep='grep --color=auto'
+    #alias fgrep='fgrep --color=auto'
+    #alias egrep='egrep --color=auto'
+    alias pygrep='grep --exclude=\*svn\* --exclude=\*.js\* --exclude=\*~\*  --exclude=\*.tmp\* --exclude=entries --exclude=all-wcprops --exclude=\*.txt\* --exclude=\*.pyc\* -rn --exclude=\*.swp\*'
+    alias pygrep_nohtml='grep --exclude=\*.html\* --exclude=\*svn\* --exclude=\*.js\* --exclude=\*~\*  --exclude=\*.tmp\* --exclude=entries --exclude=all-wcprops --exclude=\*.txt\* --exclude=\*.pyc\* -irn'
+    alias pasgrep='grep --exclude=\*svn\* --exclude=\*.js\* --exclude=\*~\*  --exclude=\*.tmp\* --exclude=entries --exclude=all-wcprops --exclude=\*.txt\* --exclude=\*.pyc\* -irn'
+    alias asgrep='grep --include=\*.as -irn'
+
+    # Syntax highlighting 'cat' command for python code.
+    alias pcat='pygmentize -O bg=dark'
+fi
+
