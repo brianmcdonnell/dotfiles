@@ -20,6 +20,8 @@ hgext.churn=
 hgext.convert=
 # Enables git style relative revisions: e.g. tip^, tip^2
 parentrevspec =
+# Allows PS1 environment variable to be easily custonized.
+prompt = ~/source/hgextensions/hg-prompt/prompt.py
 
 [alias]
 # Simulates git command to show contents of a changeset.
