@@ -1,11 +1,30 @@
 [ui]
+# Defaulting to my presonal identity. Override this 
+# in work-project repos with work email.
 username = Brian McDonnell <mcdonnellb@gmail.com>
+# Ignore patterns in this file across all repos.
+# Good for common stuff like pyc and swp files.
 ignore = ~/.hgignore
 
 [extensions]
+# Required for use of bookmarks in hg versions before 1.8
 hgext.bookmarks =
+# Adds colour to status, diff and qseries command outputs.
 color =
+# Renders ascii graph log with commit messages in terminal.
 hgext.graphlog = 
+# Graphs line changes per user across the repo
 hgext.churn=
+# Converts other VCS systems to hg.
+# Also handy for author renaming on hg repos by specifying --authors file.
 hgext.convert=
+# Enables git style relative revisions: e.g. tip^, tip^2
+parentrevspec =
+
+[alias]
+# Simulates git command to show contents of a changeset.
+# Combined with parentrevspec extension: 
+#   hg show tip^
+# shows the contents of the last committed changset
+show = log --patch --rev
 
