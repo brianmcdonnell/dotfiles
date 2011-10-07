@@ -1,22 +1,29 @@
 [user]
-        name = Brian McDonnell
-        email = mcdonnellb@gmail.com
+    name = Brian McDonnell
+    # Default to personal identity.  Override this in work projects
+    # with work email address.
+    email = mcdonnellb@gmail.com
 
-[color]
-        branch = auto
-        diff = auto
-        interactive = auto
-        status = auto
-#[core]
-#        editor = vim
-#[merge]
-#        tool = vimdiff
+[core]
+    # Editor to use for any git commands that seek input (e.g. commit, tag)
+    editor = vim
+    # Ignore patterns in this file across all projects.
+    # While any filename can be used .cvsignore is handy as it's also
+    # used by other utils such as rsync.
+    excludesfile = ~/.cvsignore
+
+[merge]
+    tool = vimdiff
+
 [alias]
     st = status
     ci = commit
     br = branch
     co = checkout
 
+[color]
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
 
-[core]
-	excludesfile = ~/.cvsignore
