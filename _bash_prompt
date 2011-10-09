@@ -66,7 +66,7 @@ if [ "$color_prompt" = yes ]; then
     #PS1="\n${xBLUE}\u@\h ${xCYAN}\w"' $(__git_ps1 "[%s]") '"\n${xCLR}$ ${xCLR}"
 
     # Works for mercurial and git
-    PS1='\n${xBLUE}\u@\h ${xCYAN}\w ''$(git_ps1)''$(hg_ps1)\n${xCLR}$ ${xCLR}'
+    PS1='\n${xBLUE}\u@\h ${xCYAN}\w $(git_ps1)$(hg_ps1)\n${xCLR}$ ${xCLR}'
 
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w \$ '
