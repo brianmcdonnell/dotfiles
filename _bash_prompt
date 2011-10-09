@@ -40,23 +40,20 @@ xCLR=$'\e[00m'
 #if [ -f /usr/local/git/contrib/completion/git-completion.bash ]; then
 #  . /usr/local/git/contrib/completion/git-completion.bash
 #fi
-#GIT_PS1_SHOWDIRTYSTATE=true
-
+GIT_PS1_SHOWDIRTYSTATE=true
 
 function parse_git_branch {
   ref=$(git-symbolic-ref HEAD 2> /dev/null) || return
   echo "("${ref#refs/heads/}")"
 }
 
-function vcsbranch {
-    echo '44\${__git_ps1 "(%s)"}55'
-}
-
 hg_ps1() {
-    hg prompt "{${xCLR} ${xORANGE}hg:{branch}}{${xCLR}|${xORANGE}{bookmark}}{${xYELLOW}[{status}]}" 2> /dev/null
+    hg prompt "{${xCLR}${xORANGE}hg:{branch}}{${xCLR}|${xORANGE}{bookmark}}{${xYELLOW}[{status}]}" 2> /dev/null
 }
 
-#export PS1='\n${PINK}\u ${D}at ${ORANGE}\h ${D}in ${GREEN}\w$(hg_ps1) ${D}\n$ '
+git_ps1() {
+    echo -n "${xORANGE}$(__git_ps1 "git:%s")${xCLR}"
+}
 
 if [ "$color_prompt" = yes ]; then
     # Default colour prompt
@@ -64,10 +61,12 @@ if [ "$color_prompt" = yes ]; then
     # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\h:\[\033[01;32m\]\w $(parse_git_branch)\[\033[00m\]\$ '
 
     # Works for mercurial directories
-    PS1='\n${xBLUE}\u@\h ${xCYAN}\w$(hg_ps1)\n${xCLR}$ ${xCLR}'
-
+    # PS1='\n${xBLUE}\u@\h ${xCYAN}\w$(hg_ps1)\n${xCLR}$ ${xCLR}'
     # Works for git directories
-    PS1="\n${xBLUE}\u@\h ${xCYAN}\w"' $(__git_ps1 "(%s)") '"\n${xCLR}$ ${xCLR}"
+    #PS1="\n${xBLUE}\u@\h ${xCYAN}\w"' $(__git_ps1 "[%s]") '"\n${xCLR}$ ${xCLR}"
+
+    # Works for mercurial and git
+    PS1='\n${xBLUE}\u@\h ${xCYAN}\w ''$(git_ps1)''$(hg_ps1)\n${xCLR}$ ${xCLR}'
 
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w \$ '
