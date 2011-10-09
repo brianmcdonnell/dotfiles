@@ -61,3 +61,4 @@ export EC2_CERT=$HOME/.ec2/cert-frontsquare.pem
 # Customize the path
 export PATH=$PATH:~/.bin:/opt/flex/bin
 
+#export VIRTUAL_ENV_DISABLE_PROMPT="yes"
