@@ -35,6 +35,14 @@ xCYAN=$'\e[1;34m'
 xPURPLE=$'\e[0;35m'
 xCLR=$'\e[00m'
 
+
+# Set git autocompletion and PS1 integration
+#if [ -f /usr/local/git/contrib/completion/git-completion.bash ]; then
+#  . /usr/local/git/contrib/completion/git-completion.bash
+#fi
+#GIT_PS1_SHOWDIRTYSTATE=true
+
+
 function parse_git_branch {
   ref=$(git-symbolic-ref HEAD 2> /dev/null) || return
   echo "("${ref#refs/heads/}")"
@@ -54,7 +62,12 @@ if [ "$color_prompt" = yes ]; then
     # Default colour prompt
     # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
     # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\h:\[\033[01;32m\]\w $(parse_git_branch)\[\033[00m\]\$ '
+
+    # Works for mercurial directories
     PS1='\n${xBLUE}\u@\h ${xCYAN}\w$(hg_ps1)\n${xCLR}$ ${xCLR}'
+
+    # Works for git directories
+    PS1="\n${xBLUE}\u@\h ${xCYAN}\w"' $(__git_ps1 "(%s)") '"\n${xCLR}$ ${xCLR}"
 
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w \$ '
