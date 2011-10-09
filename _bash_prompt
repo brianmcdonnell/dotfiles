@@ -48,22 +48,29 @@ hg_ps1() {
     local PY_CYAN=$'\033[1;34m'
     local PY_PURPLE=$'\033[0;35m'
     local PY_CLR=$'\033[00m'
-    hg prompt "{${PY_CLR}${PY_ORANGE}hg:{branch}}{${PY_CLR}|${PY_ORANGE}{bookmark}}{${PY_YELLOW}[{status}]}" 2> /dev/null
+    if [ "$color_prompt" = yes ]; then
+        hg prompt "{${PY_CLR}${PY_ORANGE}hg:{branch}}{${PY_CLR}|${PY_ORANGE}{bookmark}}{${PY_YELLOW}[{status}]}" 2> /dev/null
+    else
+        hg prompt "{hg:{branch}}{|{bookmark}}{[{status}]}" 2> /dev/null
+    fi
 }
 
 git_ps1() {
-    echo -n "${ORANGE}"'$(__git_ps1 "git:%s")'"${CLR}"
+    if [ "$color_prompt" = yes ]; then
+        echo -n "${ORANGE}"'$(__git_ps1 "git:%s")'"${CLR}"
+    else
+        echo -n '$(__git_ps1 "git:%s")'
+    fi
 }
 
 if [ "$color_prompt" = yes ]; then
     # Default colour prompt
     # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
     # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\h:\[\033[01;32m\]\w $(parse_git_branch)\[\033[00m\]\$ '
-
     PS1="\n${BLUE}\u@\h ${CYAN}\w $(git_ps1)"'$(hg_ps1)'"\n${CLR}$ ${CLR}"
-
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w \$ '
+    # PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w \$ '
+    PS1="\n\u@\h \w $(git_ps1)"'$(hg_ps1)'"\n$ "
 fi
 unset color_prompt force_color_prompt
 
