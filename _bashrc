@@ -48,7 +48,9 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 export WORKON_HOME=$HOME/.virtualenvs
-source ~/.virtualenvwrapper_bashrc
+if [ -f ~/.virtualenvwrapper_bashrc ]; then
+    . ~/.virtualenvwrapper_bashrc
+fi
 
 # Environment vars for Amazon EC2 tools
 export export EC2_HOME=$HOME/lib
