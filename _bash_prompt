@@ -25,13 +25,30 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 
+BLACK="\[\033[0;30m\]"
+GRAY="\[\033[1;30m\]"
+
+RED="\[\033[0;31m\]"
+RED_BOLD="\[\033[1;31m\]"
+
 GREEN="\[\033[0;32m\]"
-LIME="\[\033[1;32m\]"
+GREEN_BOLD="\[\033[1;32m\]"
+
 ORANGE="\[\033[0;33m\]"
 YELLOW="\[\033[1;33m\]"
+
 BLUE="\[\033[0;34m\]"
-CYAN="\[\033[1;34m\]"
-PURPLE="\[\033[0;35m\]"
+BLUE_BOLD="\[\033[1;34m\]"
+
+PINK="\[\033[0;35m\]"
+PINK_BOLD="\[\033[1;35m\]"
+
+CYAN="\[\033[0;36m\]"
+CYAN_BOLD="\[\033[1;36m\]"
+
+WHITE="\[\033[0;37m\]"
+WHITE_BOLD="\[\033[1;37m\]"
+
 CLR="\[\033[00m\]"
 
 # Shows * or + after prompt if git has modifications.
@@ -44,12 +61,13 @@ function hg_ps1() {
     # The hg prompt format string is interpreted by python code. I could not get it to render colors correctly
     # when the colours were wrapped in the no-length indicated escape sequence: "\[COLOR_CODE_HERE\]".
     local PY_GREEN=$'\033[0;32m'
-    local PY_LIME=$'\033[1;32m'
+    local PY_GREEN_BOLD=$'\033[1;32m'
     local PY_ORANGE=$'\033[0;33m'
     local PY_YELLOW=$'\033[1;33m'
     local PY_BLUE=$'\033[0;34m'
-    local PY_CYAN=$'\033[1;34m'
-    local PY_PURPLE=$'\033[0;35m'
+    local PY_BLUE_BOLD=$'\033[1;34m'
+    local PY_PINK=$'\033[0;35m'
+    local PY_PINK_BOLD=$'\033[1;35m'
     local PY_CLR=$'\033[00m'
 
     if [ "$use_color" = yes ]; then
@@ -71,9 +89,9 @@ function git_ps1() {
 if [ "$color_prompt" = yes ]; then
     # Default colour prompt
     # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    PS1="\n${BLUE}\u@\h ${CYAN}\w $(git_ps1)"'$(hg_ps1 "yes")'"\n${CLR}$ "
+    PS1="\n${CYAN}\u@\h ${WHITE}\w $(git_ps1)"'$(hg_ps1 "yes")'"\n${CLR}$ "
 
-    #PS1="\n${BLUE}\u@\h ${CYAN}\w $(git_ps1)"'$(hg_ps1 "yes")'"\n${VIRTUAL_ENV:+($VIRTUAL_ENV)}${CLR}$ "
+    #PS1="\n${BLUE}\u@\h ${BLUE_BOLD}\w $(git_ps1)"'$(hg_ps1 "yes")'"\n${VIRTUAL_ENV:+($VIRTUAL_ENV)}${CLR}$ "
     #if [ -z "$VIRTUAL_ENV_DISABLE_PROMPT" ] ; then
     #    echo "disable venv NOT set"
     #else
