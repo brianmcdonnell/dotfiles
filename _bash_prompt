@@ -77,6 +77,10 @@ function hg_ps1() {
     fi
 }
 
+# Tell __git_ps1 to indicate the following states.
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+
 function git_ps1() {
     # Displays git branch and status.
     if [ "$color_prompt" = yes ]; then
