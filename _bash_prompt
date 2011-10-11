@@ -87,15 +87,34 @@ function git_ps1() {
 }
 
 function vir_env() {
+    # If a virtual environment has been activated show the last two 
+    # path components to the virtualenv.
+    # 
+    # Showing the last two path components as the virtualenv is often simply
+    # called 'env'.  'env' however, is usually in a meaningfully named 
+    # project directory so it's more useful to see 'project/env'.
+    if [ -n "$VIRTUAL_ENV" ]; then
+        local VIRTENV=$(echo $VIRTUAL_ENV | sed  's/\/$//' | rev | cut -d/ -f1,2 | rev)
+    fi
+
     # Displays the current virtual python environment.
     if [ "$color_prompt" = yes ]; then
-        echo -n "${PINK}${VIRTUAL_ENV:+ (`basename $VIRTUAL_ENV`)}${CLR}"
+        echo -n "${PINK}${VIRTUAL_ENV:+ ($VIRTENV)}${CLR}"
     else
-        echo -n "${VIRTUAL_ENV:+ (`basename $VIRTUAL_ENV`)}"
+        echo -n "${VIRTUAL_ENV:+ ($VIRTENV)}"
     fi
 }
 
 function prompt_command() {
+    # If this is an xterm set the title to user@host:dir
+    case "$TERM" in
+    xterm*|rxvt*)
+        echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"
+        ;;
+    *)
+        ;;
+    esac
+
     # Function to render the prompt each time it's outputted in the terminal.
     if [ "$color_prompt" = yes ]; then
         PS1="\n${GREEN}${debian_chroot:+($debian_chroot)}${CYAN}\u@\h ${WHITE}\w$(vir_env) $(git_ps1)"'$(hg_ps1 "yes")'"\n${CLR}$ "
