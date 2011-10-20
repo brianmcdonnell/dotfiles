@@ -22,8 +22,11 @@ au! BufRead,BufNewFile *.json set filetype=json foldmethod=syntax
 au BufNewFile,BufRead .bash_aliases*,.bash_prompt* call SetFileTypeSH("bash")
 
 
-" Keystroke namespace under which to map user-defined commands.
+" Keystroke namespace under which to map global user-defined commands.
 let mapleader = ","
+
+" Keystroke namespace used for filetype-specific commands
+let maplocalleader = "\\"
 
 " Alt-arrows to navigate between buffers
 map <A-left> <C-W>h
