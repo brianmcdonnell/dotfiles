@@ -70,7 +70,9 @@ highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
 
 " Map Alt-L for NerdTree
-map <A-l> <Esc>:NERDTreeToggle<CR>
+map <leader>d :NERDTreeToggle<CR>
+" map <ì> <Esc>:NERDTreeToggle<CR>
+" map <A-l> <Esc>:NERDTreeToggle<CR>
 
 " Toggle Gundo
 map <leader>g :GundoToggle<CR>
