@@ -30,3 +30,9 @@ prompt = ~/source/hgextensions/hg-prompt/prompt.py
 # shows the contents of the last committed changset
 show = log --patch --rev
 
+[merge-tools]
+threesome.executable = gvim
+threesome.args = -f $base $local $other $output -c 'ThreesomeInit'
+threesome.premerge = keep
+threesome.priority = 1
+

@@ -13,7 +13,11 @@
     excludesfile = ~/.cvsignore
 
 [merge]
-    tool = vimdiff
+    tool = threesome
+
+[mergetool "threesome"]
+    cmd = "gvim -f $BASE $LOCAL $REMOTE $MERGED -c 'ThreesomeInit'"
+    trustExitCode = true
 
 [alias]
     st = status
