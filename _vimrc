@@ -18,7 +18,7 @@ filetype plugin indent on
 autocmd BufEnter *.py set ai sw=4 ts=4 sta et fo=croql
 autocmd BufRead,BufNewFile *.as set filetype=actionscript
 autocmd FileType * set tabstop=4|set shiftwidth=4|set expandtab
-au! BufRead,BufNewFile *.json set filetype=json foldmethod=syntax 
+au! BufRead,BufNewFile *.json set filetype=javascript foldmethod=syntax 
 au BufNewFile,BufRead .bash_aliases*,.bash_prompt* call SetFileTypeSH("bash")
 
 
