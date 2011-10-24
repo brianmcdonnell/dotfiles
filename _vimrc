@@ -6,7 +6,9 @@ call pathogen#helptags()
 " Set colors depending on gvim or vim
 if has("gui_running")
     colorscheme desert
-    set guifont=dejavu_sans_mono:h11
+    if has("win32")
+        set guifont=dejavu_sans_mono:h11
+    fi
 else
     colorscheme torte
 endif
