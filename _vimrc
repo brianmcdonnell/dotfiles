@@ -6,9 +6,6 @@ call pathogen#helptags()
 " Set colors depending on gvim or vim
 if has("gui_running")
     colorscheme desert
-    if has("win32")
-        set guifont=dejavu_sans_mono:h11
-    fi
 else
     colorscheme torte
 endif
@@ -114,6 +111,7 @@ endif
 let NERDTreeIgnore=['\.pyc']
 if has("win32")
     map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+    set guifont=dejavu_sans_mono:h11
 endif
 
 " Remove trailing whitespace
