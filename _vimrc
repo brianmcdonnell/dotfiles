@@ -75,7 +75,7 @@ match OverLength /\%81v.\+/
 " set colorcolumn = 80
 
 " Map Alt-L for NerdTree
-map <leader>d :NERDTreeToggle<CR>
+map <leader>f :NERDTreeToggle<CR>
 " map <ì> <Esc>:NERDTreeToggle<CR>
 " map <A-l> <Esc>:NERDTreeToggle<CR>
 
@@ -94,7 +94,7 @@ set completeopt=menuone,longest,preview
 let g:pep8_map='<leader>8'
 
 " Jump to definition
-map <leader>j :RopeGotoDefinition<CR>
+map <leader>d :RopeGotoDefinition<CR>
 " Rename occurances of...
 map <leader>r :RopeRename<CR>
 
