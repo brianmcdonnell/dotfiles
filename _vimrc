@@ -69,10 +69,11 @@ set mouse=a
 nnoremap <F2> :set nonumber!<CR>
 
 " Show red background for code over 80 chars long
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" match OverLength /\%81v.\+/
 " A vertical line highlighting long lines
-" set colorcolumn = 80
+set colorcolumn=80
+hi colorcolumn ctermbg=black guibg=#383838
 
 " Map Alt-L for NerdTree
 map <leader>f :NERDTreeToggle<CR>
