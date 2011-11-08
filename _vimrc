@@ -49,6 +49,13 @@ set hlsearch
 " Search highlighting toggle on/off
 map <leader>h :set hlsearch!<bar>set hlsearch?<CR>
 
+" Show red background for code over 80 chars long
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" match OverLength /\%81v.\+/
+" A vertical line highlighting long lines
+set colorcolumn=80
+hi colorcolumn ctermbg=black guibg=#383838
+
 " Enable code folding
 set foldmethod=indent
 set foldlevel=99
@@ -67,13 +74,6 @@ set mouse=a
 
 " Toggle line numbers and fold column for easy copying:
 nnoremap <F2> :set nonumber!<CR>
-
-" Show red background for code over 80 chars long
-" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-" match OverLength /\%81v.\+/
-" A vertical line highlighting long lines
-set colorcolumn=80
-hi colorcolumn ctermbg=black guibg=#383838
 
 " Map Alt-L for NerdTree
 map <leader>f :NERDTreeToggle<CR>
