@@ -47,7 +47,6 @@ CYAN="\[\033[0;36m\]"
 CYAN_BOLD="\[\033[1;36m\]"
 
 WHITE="\[\033[0;37m\]"
-WHITE_RED="\[\033[41;37m\]"
 WHITE_BOLD="\[\033[1;37m\]"
 
 
@@ -114,10 +113,15 @@ function vir_env() {
 
 function user_host() 
 {
-    if [ "$USER" = ubuntu ]; then
-        echo -n "${WHITE_RED}\u@\h${CLR}"
+    RED_WHITE="\[\033[41;37m\]"
+    MAGENTA_WHITE="\[\033[45;37m\]"
+
+    if [ $(hostname) == production* ]; then
+        echo -n "${RED_WHITE}\u@\H${CLR}"
+    elif [ $(hostname) == staging* ]; then
+        echo -n "${MAGENTA_WHITE}\u@\H${CLR}"
     else
-        echo -n "${CYAN}\u@\h${CLR}"
+        echo -n "${CYAN}\u@\H${CLR}"
     fi
 }
 
