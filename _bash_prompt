@@ -116,9 +116,9 @@ function user_host()
     RED_WHITE="\[\033[41;37m\]"
     MAGENTA_WHITE="\[\033[45;37m\]"
 
-    if [ $(hostname) == production* ]; then
+    if [[ $(hostname) == production* ]]; then
         echo -n "${RED_WHITE}\u@\H${CLR}"
-    elif [ $(hostname) == staging* ]; then
+    elif [[ $(hostname) == staging* ]]; then
         echo -n "${MAGENTA_WHITE}\u@\H${CLR}"
     else
         echo -n "${CYAN}\u@\H${CLR}"
