@@ -111,17 +111,46 @@ function vir_env() {
     fi
 }
 
+
+
+function get_user() 
+{
+    RED_WHITE="\[\033[41;37m\]"
+    MAGENTA_WHITE="\[\033[45;37m\]"
+    USERNAME=$(whoami)
+    USERCOLOR=${GRAY}
+    NORMALUSER=$(basename "$HOME")
+
+    if [[ "$USERNAME" = root ]]; then
+        USERCOLOR=${RED}
+    else
+        if [[ ( $(hostname) == production* ) ||  ( $(hostname) == staging* ) ]]; then
+            if [[ ! "$USERNAME" = $NORMALUSER ]]; then
+                USERCOLOR=${PINK}
+            fi
+        else
+            if [[ ! "$USERNAME" = $NORMALUSER ]]; then
+                USERCOLOR=${PINK}
+            else
+                USERCOLOR=${CYAN}
+            fi
+        fi
+    fi
+
+    echo -n "${USERCOLOR}\u${CLR}"
+}
+
 function user_host() 
 {
     RED_WHITE="\[\033[41;37m\]"
     MAGENTA_WHITE="\[\033[45;37m\]"
 
     if [[ $(hostname) == production* ]]; then
-        echo -n "${RED_WHITE}\u@\H${CLR}"
+        echo -n "$(get_user)\u${GRAY}@${RED_WHITE}\H${CLR}"
     elif [[ $(hostname) == staging* ]]; then
-        echo -n "${MAGENTA_WHITE}\u@\H${CLR}"
+        echo -n "$(get_user)${GRAY}@${MAGENTA_WHITE}\H${CLR}"
     else
-        echo -n "${CYAN}\u@\H${CLR}"
+        echo -n "$(get_user)${CYAN}@${CYAN}\H${CLR}"
     fi
 }
 
