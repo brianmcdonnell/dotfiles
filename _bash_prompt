@@ -121,15 +121,15 @@ function get_user()
     USERCOLOR=${GRAY}
     NORMALUSER=$(basename "$HOME")
 
-    if [[ "$USERNAME" = root ]]; then
+    if [[ "$USERNAME" == "root" ]]; then
         USERCOLOR=${RED}
     else
         if [[ ( $(hostname) == production* ) ||  ( $(hostname) == staging* ) ]]; then
-            if [[ ! "$USERNAME" = $NORMALUSER ]]; then
+            if [[ ! "$USERNAME" == "$NORMALUSER" ]]; then
                 USERCOLOR=${PINK}
             fi
         else
-            if [[ ! "$USERNAME" = $NORMALUSER ]]; then
+            if [[ ! "$USERNAME" == "$NORMALUSER" ]]; then
                 USERCOLOR=${PINK}
             else
                 USERCOLOR=${CYAN}
@@ -146,9 +146,9 @@ function user_host()
     MAGENTA_WHITE="\[\033[45;37m\]"
 
     if [[ $(hostname) == production* ]]; then
-        echo -n "$(get_user)\u${GRAY}@${RED_WHITE}\H${CLR}"
+        echo -n "$(get_user)\u${WHITE}@${RED_WHITE}\H${CLR}"
     elif [[ $(hostname) == staging* ]]; then
-        echo -n "$(get_user)${GRAY}@${MAGENTA_WHITE}\H${CLR}"
+        echo -n "$(get_user)${WHITE}@${MAGENTA_WHITE}\H${CLR}"
     else
         echo -n "$(get_user)${CYAN}@${CYAN}\H${CLR}"
     fi
