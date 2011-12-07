@@ -148,5 +148,6 @@ PROMPT_COMMAND=prompt_command
 #unset color_prompt force_color_prompt
 unset force_color_prompt
 
-
+# Tells virtualenv not to modify the prompt when activated.
+export VIRTUAL_ENV_DISABLE_PROMPT="yes"
 
