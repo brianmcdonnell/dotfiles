@@ -118,7 +118,7 @@ function get_user()
     RED_WHITE="\[\033[41;37m\]"
     MAGENTA_WHITE="\[\033[45;37m\]"
     USERNAME=$(whoami)
-    USERCOLOR=${GRAY}
+    USERCOLOR=${WHITE}
     NORMALUSER=$(basename "$HOME")
 
     if [[ "$USERNAME" == "root" ]]; then
