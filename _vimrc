@@ -37,7 +37,7 @@ map <C-Tab> <Esc>:bnext!<CR>
 map <C-S-Tab> <Esc>:bprevious!<CR>
 
 " Generally ignore these file types in file listings.
-set wildignore+=*.o,*.obj,.git,*.pyc
+set wildignore+=*.o,*.obj,.git,*.pyc,*.sqlite
 
 " Disable text wrapping
 set nowrap
@@ -48,6 +48,15 @@ map <leader>w :set wrap!<bar>set wrap?<CR>
 set hlsearch
 " Search highlighting toggle on/off
 map <leader>h :set hlsearch!<bar>set hlsearch?<CR>
+
+" Show red background for code over 80 chars long
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" match OverLength /\%81v.\+/
+" A vertical line highlighting long lines
+if version >= 730
+    set colorcolumn=80
+    hi colorcolumn ctermbg=black guibg=#383838
+endif
 
 " Enable code folding
 set foldmethod=indent
@@ -67,16 +76,6 @@ set mouse=a
 
 " Toggle line numbers and fold column for easy copying:
 nnoremap <F2> :set nonumber!<CR>
-
-" Show red background for code over 80 chars long
-" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-" match OverLength /\%81v.\+/
-" A vertical line highlighting long lines
-if version >= 730
-    set colorcolumn=80
-    hi colorcolumn ctermbg=black guibg=#383838
-endif
-
 
 " Map Alt-L for NerdTree
 map <leader>f :NERDTreeToggle<CR>

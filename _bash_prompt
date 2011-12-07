@@ -49,6 +49,8 @@ CYAN_BOLD="\[\033[1;36m\]"
 WHITE="\[\033[0;37m\]"
 WHITE_BOLD="\[\033[1;37m\]"
 
+
+
 CLR="\[\033[00m\]"
 
 # Shows * or + after prompt if git has modifications.
@@ -109,6 +111,20 @@ function vir_env() {
     fi
 }
 
+function user_host() 
+{
+    RED_WHITE="\[\033[41;37m\]"
+    MAGENTA_WHITE="\[\033[45;37m\]"
+
+    if [[ $(hostname) == production* ]]; then
+        echo -n "${RED_WHITE}\u@\H${CLR}"
+    elif [[ $(hostname) == staging* ]]; then
+        echo -n "${MAGENTA_WHITE}\u@\H${CLR}"
+    else
+        echo -n "${CYAN}\u@\H${CLR}"
+    fi
+}
+
 function prompt_command() {
     # If this is an xterm set the title to user@host:dir
     case "$TERM" in
@@ -121,9 +137,9 @@ function prompt_command() {
 
     # Function to render the prompt each time it's outputted in the terminal.
     if [ "$color_prompt" = yes ]; then
-        PS1="\n${GREEN}${debian_chroot:+($debian_chroot)}${CYAN}\u@\h ${WHITE}\w$(vir_env) $(git_ps1)"'$(hg_ps1 "yes")'"\n${CLR}$ "
+        PS1="\n${GREEN}${debian_chroot:+($debian_chroot)}$(user_host) ${WHITE}\w$(vir_env) $(git_ps1)"'$(hg_ps1 "yes")'"${CLR}\n\\$ "
     else
-        PS1="\n${debian_chroot:+($debian_chroot)}\u@\h \w$(vir_env) $(git_ps1)"'$(hg_ps1)'"\n$ "
+        PS1="\n${debian_chroot:+($debian_chroot)}\u@\h \w$(vir_env) $(git_ps1)"'$(hg_ps1)'"\n\\$ "
     fi
 }
 PROMPT_COMMAND=prompt_command
