@@ -37,7 +37,7 @@ map <C-Tab> <Esc>:bnext!<CR>
 map <C-S-Tab> <Esc>:bprevious!<CR>
 
 " Generally ignore these file types in file listings.
-set wildignore+=*.o,*.obj,.git,*.pyc,*.sqlite
+set wildignore+=*.o,*.obj,.git,*.pyc,*.sqlite,*.sqlite3
 
 " Disable text wrapping
 set nowrap
