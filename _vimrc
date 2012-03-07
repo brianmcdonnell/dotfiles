@@ -53,8 +53,10 @@ map <leader>h :set hlsearch!<bar>set hlsearch?<CR>
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%81v.\+/
 " A vertical line highlighting long lines
-set colorcolumn=80
-hi colorcolumn ctermbg=black guibg=#383838
+if version >= 730
+    set colorcolumn=80
+    hi colorcolumn ctermbg=black guibg=#383838
+endif
 
 " Enable code folding
 set foldmethod=indent
