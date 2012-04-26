@@ -9,10 +9,11 @@ if [ "$TERM" != "dumb" ] && [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     #alias fgrep='fgrep --color=auto'
     #alias egrep='egrep --color=auto'
-    alias pygrep='grep --exclude=\*svn\* --exclude=\*.js\* --exclude=\*~\*  --exclude=\*.tmp\* --exclude=entries --exclude=all-wcprops --exclude=\*.txt\* --exclude=\*.pyc\* -rn --exclude=\*.swp\*'
-    alias pygrep_nohtml='grep --exclude=\*.html\* --exclude=\*svn\* --exclude=\*.js\* --exclude=\*~\*  --exclude=\*.tmp\* --exclude=entries --exclude=all-wcprops --exclude=\*.txt\* --exclude=\*.pyc\* -irn'
-    alias pasgrep='grep --exclude=\*svn\* --exclude=\*.js\* --exclude=\*~\*  --exclude=\*.tmp\* --exclude=entries --exclude=all-wcprops --exclude=\*.txt\* --exclude=\*.pyc\* -irn'
-    alias asgrep='grep --include=\*.as -irn'
+    alias pygrep='grep -rn --exclude=\*svn\* --exclude=\migrations\* --exclude=\*.js\* --exclude=\*~\*  --exclude=\*.tmp\* --exclude=entries --exclude=all-wcprops --exclude=\*.txt\* --exclude=\*.pyc\* --exclude=\*.swp\* --exclude-dir=\.ropeproject'
+    alias pygrep_nohtml='grep -rn --exclude=\*.html\* --exclude=\*svn\* --exclude=\*.js\* --exclude=\*~\*  --exclude=\*.tmp\* --exclude=entries --exclude=all-wcprops --exclude=\*.txt\* --exclude=\*.pyc\* --exclude-dir=\.ropeproject'
+    alias pasgrep='grep -irn --exclude=\*svn\* --exclude=\*.js\* --exclude=\*~\*  --exclude=\*.tmp\* --exclude=entries --exclude=all-wcprops --exclude=\*.txt\* --exclude=\*.pyc\*'
+    alias asgrep='grep -irn --include=\*.as'
+    alias htmlgrep='grep -irn --include=\*.html'
 
     # Syntax highlighting 'cat' command for python code.
     alias pcat='pygmentize -O bg=dark'
