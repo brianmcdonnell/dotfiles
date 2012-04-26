@@ -27,7 +27,7 @@ checkfiles = ~/.hgextensions/ml-hgext/checkfiles.py
 
 [hooks]
 # enables hook to check incoming changeset
-pretxnchangegroup.checkfiles = python:~/.hgextensions/ml-hgext/checkfiles.py:check_hook
+# pretxnchangegroup.checkfiles = python:~/.hgextensions/ml-hgext/checkfiles.py:check_hook
 # enables hook to stop bad commits
 pretxncommit.checkfiles = python:~/.hgextensions/ml-hgext/checkfiles.py:check_hook
 # enables hook to fix files before creating commit
