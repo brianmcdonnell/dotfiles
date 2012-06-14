@@ -24,6 +24,8 @@ parentrevspec =
 prompt = ~/.hgextensions/hg-prompt/prompt.py
 # 'checkfiles' checks for tabs and trailing whitespace
 checkfiles = ~/.hgextensions/ml-hgext/checkfiles.py
+# Moves revisions from one point to another.
+rebase =
 
 [hooks]
 # enables hook to check incoming changeset
