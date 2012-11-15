@@ -31,7 +31,7 @@ rebase =
 # enables hook to check incoming changeset
 # pretxnchangegroup.checkfiles = python:~/.hgextensions/ml-hgext/checkfiles.py:check_hook
 # enables hook to stop bad commits
-pretxncommit.checkfiles = python:~/.hgextensions/ml-hgext/checkfiles.py:check_hook
+#pretxncommit.checkfiles = python:~/.hgextensions/ml-hgext/checkfiles.py:check_hook
 # enables hook to fix files before creating commit
 precommit.checkfiles = python:~/.hgextensions/ml-hgext/checkfiles.py:fixup_hook
 
