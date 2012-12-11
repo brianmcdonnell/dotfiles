@@ -54,7 +54,7 @@ map <leader>h :set hlsearch!<bar>set hlsearch?<CR>
 " match OverLength /\%81v.\+/
 " A vertical line highlighting long lines
 if exists("+colorcolumn")
-    set colorcolumn=80
+    set colorcolumn=80,120
     hi colorcolumn ctermbg=black guibg=#383838
 endif
 
