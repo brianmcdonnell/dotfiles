@@ -15,12 +15,17 @@ syntax on
 " Filtype detection, load plugin files, load indent files
 filetype plugin indent on
 
-autocmd BufEnter *.py set ai sw=4 ts=4 sta et fo=croql
-autocmd BufRead,BufNewFile *.as set filetype=actionscript
-autocmd FileType * set tabstop=4|set shiftwidth=4|set expandtab
-au! BufRead,BufNewFile *.json set filetype=javascript foldmethod=syntax 
-au BufNewFile,BufRead .bash_aliases*,.bash_prompt* call SetFileTypeSH("bash")
-
+" autoindent        Match indent level from previous line
+" expandtab         Uses spaces instead of tab upon a <Tab> keystroke
+" smarttab          Uses shiftwidth at the start of lines instead of tabstop
+" tabstop           changes the nunber of spaces use to display a tab character
+" shiftwidth        Number of spaces to move by when indenting/outdenting
+" formatoptions     each letter represents a formatting rule (see help: fo-table)
+autocmd FileType * setlocal tabstop=4 shiftwidth=4
+autocmd BufEnter *.py setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
+autocmd BufRead,BufNewFile *.as setlocal filetype=actionscript
+autocmd BufRead,BufNewFile *.json setlocal filetype=javascript foldmethod=syntax
+autocmd BufRead,BufNewFile .bash_aliases*,.bash_prompt* setlocal filetype=sh
 
 " Keystroke namespace under which to map global user-defined commands.
 let mapleader = ","
@@ -81,10 +86,10 @@ nnoremap <F2> :set nonumber!<CR>
 map <leader>f :NERDTreeToggle<CR>
 let NERDTreeIgnore=['\.pyc']
 
-" Toggle Gundo
+" Toggle Gundo (list of recent edits you can revert)
 map <leader>g :GundoToggle<CR>
 
-" ,td for TaskList
+" TaskList of TODOs and FIXMEs
 map <leader>td <Plug>TaskList
 
 " Supertab code completion
