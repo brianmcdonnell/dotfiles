@@ -79,8 +79,7 @@ nnoremap <F2> :set nonumber!<CR>
 
 " Map Alt-L for NerdTree
 map <leader>f :NERDTreeToggle<CR>
-" map <�> <Esc>:NERDTreeToggle<CR>
-" map <A-l> <Esc>:NERDTreeToggle<CR>
+let NERDTreeIgnore=['\.pyc']
 
 " Toggle Gundo
 map <leader>g :GundoToggle<CR>
@@ -113,7 +112,6 @@ else
     set list listchars=tab:→\ ,trail:·
 endif
 
-let NERDTreeIgnore=['\.pyc']
 if has("win32")
     map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
     set guifont=dejavu_sans_mono:h11
