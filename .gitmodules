@@ -37,3 +37,6 @@
 [submodule "_vim/bundle/tail-bundle"]
 	path = _vim/bundle/tail-bundle
 	url = https://github.com/vim-scripts/Tail-Bundle.git
+[submodule "_vim/bundle/splice"]
+	path = _vim/bundle/splice
+	url = https://github.com/sjl/splice.vim.git
