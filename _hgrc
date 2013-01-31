@@ -50,10 +50,10 @@ check_diffs = True
 use_spaces = True
 
 [merge-tools]
-threesome.executable = gvim
-threesome.args = -f $base $local $other $output -c 'ThreesomeInit'
-threesome.premerge = keep
-threesome.priority = 1
+splice.executable = gvim
+splice.args = -f $base $local $other $output -c 'SpliceInit'
+splice.premerge = keep
+splice.priority = 1
 
 [alias]
 # Simulates git command to show contents of a changeset.
