@@ -26,6 +26,8 @@ prompt = ~/.hgextensions/hg-prompt/prompt.py
 checkfiles = ~/.hgextensions/ml-hgext/checkfiles.py
 # Moves revisions from one point to another.
 rebase =
+# Shows progress bars while pushing/pulling
+progress =
 
 [hooks]
 # enables hook to check incoming changeset
