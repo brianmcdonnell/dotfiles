@@ -43,6 +43,3 @@
 [submodule "_vim/bundle/tail-bundle"]
 	path = _vim/bundle/tail-bundle
 	url = https://github.com/vim-scripts/Tail-Bundle.git
-[submodule "vim-json"]
-	path = vim-json
-	url = https://github.com/leshill/vim-json.git
