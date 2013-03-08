@@ -24,7 +24,7 @@ filetype plugin indent on
 autocmd FileType * setlocal tabstop=4 shiftwidth=4
 autocmd BufEnter *.py setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
 autocmd BufRead,BufNewFile *.as setlocal filetype=actionscript
-autocmd BufRead,BufNewFile *.json setlocal filetype=javascript foldmethod=syntax
+autocmd BufEnter *.json setlocal filetype=javascript autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
 autocmd BufRead,BufNewFile .bash_aliases*,.bash_prompt* setlocal filetype=sh
 
 " Keystroke namespace under which to map global user-defined commands.
@@ -84,7 +84,7 @@ nnoremap <F2> :set nonumber!<CR>
 
 " Map Alt-L for NerdTree
 map <leader>f :NERDTreeToggle<CR>
-let NERDTreeIgnore=['\.pyc']
+let NERDTreeIgnore=['\.pyc','env','migrations']
 
 " Toggle Gundo (list of recent edits you can revert)
 map <leader>g :GundoToggle<CR>
