@@ -23,7 +23,7 @@ filetype plugin indent on
 " formatoptions     each letter represents a formatting rule (see help: fo-table)
 autocmd FileType * setlocal tabstop=4 shiftwidth=4
 autocmd BufEnter *.py setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
-autocmd BufEnter *.conf setlocal autoindent shiftwidth=4 tabstop=4 smarttab noexpandtab formatoptions=croql
+autocmd BufEnter *.conf setlocal autoindent shiftwidth=4 tabstop=4 smarttab noexpandtab nolist formatoptions=croql
 autocmd BufRead,BufNewFile *.as setlocal filetype=actionscript
 autocmd BufEnter *.json setlocal filetype=javascript autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
 autocmd BufRead,BufNewFile .bash_aliases*,.bash_prompt* setlocal filetype=sh
@@ -117,6 +117,7 @@ if has("win32")
 else
     set list listchars=tab:→\ ,trail:·
 endif
+noremap <leader>l :set list!<CR>
 
 if has("win32")
     map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
