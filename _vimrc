@@ -15,12 +15,18 @@ syntax on
 " Filtype detection, load plugin files, load indent files
 filetype plugin indent on
 
-autocmd BufEnter *.py set ai sw=4 ts=4 sta et fo=croql
-autocmd BufRead,BufNewFile *.as set filetype=actionscript
-autocmd FileType * set tabstop=4|set shiftwidth=4|set expandtab
-au! BufRead,BufNewFile *.json set filetype=javascript foldmethod=syntax 
-au BufNewFile,BufRead .bash_aliases*,.bash_prompt* call SetFileTypeSH("bash")
-
+" autoindent        Match indent level from previous line
+" expandtab         Uses spaces instead of tab upon a <Tab> keystroke
+" smarttab          Uses shiftwidth at the start of lines instead of tabstop
+" tabstop           changes the nunber of spaces use to display a tab character
+" shiftwidth        Number of spaces to move by when indenting/outdenting
+" formatoptions     each letter represents a formatting rule (see help: fo-table)
+autocmd FileType * setlocal tabstop=4 shiftwidth=4
+autocmd BufEnter *.py setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
+autocmd BufEnter *.conf setlocal autoindent shiftwidth=4 tabstop=4 smarttab noexpandtab nolist formatoptions=croql
+autocmd BufRead,BufNewFile *.as setlocal filetype=actionscript
+autocmd BufEnter *.json setlocal filetype=javascript autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
+autocmd BufRead,BufNewFile .bash_aliases*,.bash_prompt* setlocal filetype=sh
 
 " Keystroke namespace under which to map global user-defined commands.
 let mapleader = ","
@@ -37,7 +43,7 @@ map <C-Tab> <Esc>:bnext!<CR>
 map <C-S-Tab> <Esc>:bprevious!<CR>
 
 " Generally ignore these file types in file listings.
-set wildignore+=*.o,*.obj,.git,*.pyc,*.sqlite,*.sqlite3
+set wildignore+=*.o,*.obj,.git,*.pyc,*.sqlite,*.sqlite3,env
 
 " Disable text wrapping
 set nowrap
@@ -53,8 +59,8 @@ map <leader>h :set hlsearch!<bar>set hlsearch?<CR>
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%81v.\+/
 " A vertical line highlighting long lines
-if version >= 730
-    set colorcolumn=80
+if exists("+colorcolumn")
+    set colorcolumn=80,120
     hi colorcolumn ctermbg=black guibg=#383838
 endif
 
@@ -79,13 +85,12 @@ nnoremap <F2> :set nonumber!<CR>
 
 " Map Alt-L for NerdTree
 map <leader>f :NERDTreeToggle<CR>
-" map <�> <Esc>:NERDTreeToggle<CR>
-" map <A-l> <Esc>:NERDTreeToggle<CR>
+let NERDTreeIgnore=['\.pyc','env','migrations', '_trial_temp']
 
-" Toggle Gundo
+" Toggle Gundo (list of recent edits you can revert)
 map <leader>g :GundoToggle<CR>
 
-" ,td for TaskList
+" TaskList of TODOs and FIXMEs
 map <leader>td <Plug>TaskList
 
 " Supertab code completion
@@ -112,8 +117,8 @@ if has("win32")
 else
     set list listchars=tab:→\ ,trail:·
 endif
+noremap <leader>l :set list!<CR>
 
-let NERDTreeIgnore=['\.pyc']
 if has("win32")
     map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
     set guifont=dejavu_sans_mono:h11
@@ -123,3 +128,16 @@ endif
 command! NoTrails %s/\s\+$//
 " Alternative method of removing trailing whitespace
 " nnoremap<leader>ws :%s/\s\+$//<cr>:let @/=''<CR>
+
+" Add the virtualenv's site-packages to vim path
+python << EOF
+import os.path
+import sys
+import vim
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    sys.path.insert(0, project_base_dir)
+    activate_this = os.path.join(project_base_dir,
+    'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+EOF
