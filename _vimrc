@@ -85,7 +85,7 @@ nnoremap <F2> :set nonumber!<CR>
 
 " Map Alt-L for NerdTree
 map <leader>f :NERDTreeToggle<CR>
-let NERDTreeIgnore=['\.pyc','env','migrations']
+let NERDTreeIgnore=['\.pyc','env','migrations', '_trial_temp']
 
 " Toggle Gundo (list of recent edits you can revert)
 map <leader>g :GundoToggle<CR>
