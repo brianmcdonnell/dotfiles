@@ -28,6 +28,10 @@ checkfiles = ~/.hgextensions/ml-hgext/checkfiles.py
 rebase =
 # Shows progress bars while pushing/pulling
 progress =
+# Unsure if want pemanently. Including for hg strip to remove local changesets.
+mq =
+# Purges all untracked files and dir in repo ("hg purge --print" lists without purging)
+hgext.purge=
 
 [hooks]
 # enables hook to check incoming changeset

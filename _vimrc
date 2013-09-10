@@ -27,8 +27,9 @@ set foldlevel=99
 " formatoptions     each letter represents a formatting rule (see help: fo-table)
 autocmd FileType * setlocal tabstop=4 shiftwidth=4
 autocmd BufEnter *.py setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
+autocmd BufEnter *.conf setlocal filetype=conf autoindent shiftwidth=4 tabstop=4 smarttab expandtab nolist formatoptions=croql
 autocmd BufRead,BufNewFile *.as setlocal filetype=actionscript
-autocmd BufRead,BufNewFile *.json setlocal filetype=javascript foldmethod=syntax
+autocmd BufEnter *.json setlocal filetype=javascript autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
 autocmd BufRead,BufNewFile .bash_aliases*,.bash_prompt* setlocal filetype=sh
 autocmd FileType c setlocal foldmethod=syntax
 
@@ -85,7 +86,7 @@ nnoremap <F2> :set nonumber!<CR>
 
 " Map Alt-L for NerdTree
 map <leader>f :NERDTreeToggle<CR>
-let NERDTreeIgnore=['\.pyc']
+let NERDTreeIgnore=['\.pyc','env','migrations', '_trial_temp']
 
 " Toggle Gundo (list of recent edits you can revert)
 map <leader>g :GundoToggle<CR>
@@ -117,6 +118,7 @@ if has("win32")
 else
     set list listchars=tab:→\ ,trail:·
 endif
+noremap <leader>l :set list!<CR>
 
 if has("win32")
     map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
