@@ -15,6 +15,10 @@ syntax on
 " Filtype detection, load plugin files, load indent files
 filetype plugin indent on
 
+" Enable code folding
+set foldmethod=indent
+set foldlevel=99
+
 " autoindent        Match indent level from previous line
 " expandtab         Uses spaces instead of tab upon a <Tab> keystroke
 " smarttab          Uses shiftwidth at the start of lines instead of tabstop
@@ -26,6 +30,7 @@ autocmd BufEnter *.py setlocal autoindent shiftwidth=4 tabstop=4 smarttab expand
 autocmd BufRead,BufNewFile *.as setlocal filetype=actionscript
 autocmd BufRead,BufNewFile *.json setlocal filetype=javascript foldmethod=syntax
 autocmd BufRead,BufNewFile .bash_aliases*,.bash_prompt* setlocal filetype=sh
+autocmd FileType c setlocal foldmethod=syntax
 
 " Keystroke namespace under which to map global user-defined commands.
 let mapleader = ","
@@ -62,10 +67,6 @@ if exists("+colorcolumn")
     set colorcolumn=80,120
     hi colorcolumn ctermbg=black guibg=#383838
 endif
-
-" Enable code folding
-set foldmethod=indent
-set foldlevel=99
 
 " Case-insensitive searches
 set ignorecase
