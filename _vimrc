@@ -28,6 +28,7 @@ set foldlevel=99
 autocmd FileType * setlocal tabstop=4 shiftwidth=4
 autocmd BufEnter *.py setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
 autocmd BufEnter *.conf setlocal filetype=conf autoindent shiftwidth=4 tabstop=4 smarttab expandtab nolist formatoptions=croql
+autocmd BufEnter *.xml setlocal filetype=xml autoindent shiftwidth=4 tabstop=4 smarttab expandtab nolist formatoptions=croql
 autocmd BufRead,BufNewFile *.as setlocal filetype=actionscript
 autocmd BufEnter *.json setlocal filetype=javascript autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
 autocmd BufRead,BufNewFile .bash_aliases*,.bash_prompt* setlocal filetype=sh
