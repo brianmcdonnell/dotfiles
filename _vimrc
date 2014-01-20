@@ -30,8 +30,11 @@ autocmd BufEnter *.py setlocal autoindent shiftwidth=4 tabstop=4 smarttab expand
 autocmd BufEnter *.conf setlocal filetype=conf autoindent shiftwidth=4 tabstop=4 smarttab expandtab nolist formatoptions=croql
 autocmd BufRead,BufNewFile *.as setlocal filetype=actionscript
 autocmd BufEnter *.json setlocal filetype=javascript autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
+autocmd BufEnter *.go setlocal filetype=javascript autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
 autocmd BufRead,BufNewFile .bash_aliases*,.bash_prompt* setlocal filetype=sh
 autocmd FileType c setlocal foldmethod=syntax
+autocmd BufEnter html setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
+autocmd BufEnter xhtml setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
 
 " Keystroke namespace under which to map global user-defined commands.
 let mapleader = ","
@@ -48,7 +51,7 @@ map <C-Tab> <Esc>:bnext!<CR>
 map <C-S-Tab> <Esc>:bprevious!<CR>
 
 " Generally ignore these file types in file listings.
-set wildignore+=*.o,*.obj,.git,*.pyc,*.sqlite,*.sqlite3,env
+set wildignore+=*.o,*.obj,.git,*.pyc,*.sqlite,*.sqlite3
 
 " Disable text wrapping
 set nowrap
