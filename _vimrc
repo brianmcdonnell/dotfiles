@@ -36,6 +36,7 @@ autocmd BufRead,BufNewFile .bash_aliases*,.bash_prompt* setlocal filetype=sh
 autocmd FileType c setlocal foldmethod=syntax
 autocmd BufEnter html setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
 autocmd BufEnter xhtml setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
+autocmd BufEnter htmldjango setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
 
 " Keystroke namespace under which to map global user-defined commands.
 let mapleader = ","
