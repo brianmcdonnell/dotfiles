@@ -27,7 +27,7 @@
     ci = commit
     br = branch
     co = checkout
-
+    lol = log --graph --pretty=format:\"%C(yellow)%h%Creset%C(cyan)%C(bold)%d%Creset %C(cyan)(%cr)%Creset %C(green)%ce%Creset %s\"
 [color]
     branch = auto
     diff = auto
