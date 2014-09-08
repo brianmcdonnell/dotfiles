@@ -10,6 +10,11 @@ else
     colorscheme torte
 endif
 
+" Maximize GVim on start
+if has("gui_running")
+  set lines=999 columns=999
+endif
+
 " Enable syntax highlighting
 syntax on
 " Filtype detection, load plugin files, load indent files
