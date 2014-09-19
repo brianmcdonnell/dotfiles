@@ -40,3 +40,7 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
+# Add nvm function to shell so node envs can be activated.
+if [ -f ~/.nvm/nvm.sh ]; then
+    . ~/.nvm/nvm.sh
+fi
