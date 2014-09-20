@@ -1,6 +1,3 @@
-[submodule "_vim/bundle/ropevim"]
-	path = _vim/bundle/ropevim
-	url = https://github.com/sontek/rope-vim.git
 [submodule "_vim/bundle/vim-pathogen"]
 	path = _vim/bundle/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen.git
@@ -13,21 +10,12 @@
 [submodule "_vim/bundle/command-t"]
 	path = _vim/bundle/command-t
 	url = https://github.com/wincent/Command-T.git
-[submodule "_vim/bundle/pyflakes-pathogen"]
-	path = _vim/bundle/pyflakes-pathogen
-	url = https://github.com/mitechie/pyflakes-pathogen.git
 [submodule "_vim/bundle/ack"]
 	path = _vim/bundle/ack
 	url = https://github.com/mileszs/ack.vim.git
 [submodule "_vim/bundle/gundo"]
 	path = _vim/bundle/gundo
 	url = https://github.com/sjl/gundo.vim.git
-[submodule "_vim/bundle/pydoc"]
-	path = _vim/bundle/pydoc
-	url = https://github.com/fs111/pydoc.vim.git
-[submodule "_vim/bundle/pep8"]
-	path = _vim/bundle/pep8
-	url = https://github.com/vim-scripts/pep8.git
 [submodule "_vim/bundle/tasklist"]
 	path = _vim/bundle/tasklist
 	url = https://github.com/vim-scripts/TaskList.vim.git
@@ -40,3 +28,6 @@
 [submodule "_vim/bundle/splice"]
 	path = _vim/bundle/splice
 	url = https://github.com/sjl/splice.vim.git
+[submodule "_vim/bundle/python-mode"]
+	path = _vim/bundle/python-mode
+	url = git://github.com/klen/python-mode.git
