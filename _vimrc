@@ -1,6 +1,6 @@
 filetype off
 runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#runtime_append_all_bundles()
+call pathogen#infect()
 call pathogen#helptags()
 
 " Set colors depending on gvim or vim
@@ -116,8 +116,6 @@ let g:pep8_map='<leader>8'
 map <leader>d :RopeGotoDefinition<CR>
 " Rename occurances of...
 map <leader>r :RopeRename<CR>
-
-let g:pyflakes_use_quickfix = 0
 
 " Fuzzy search in code
 nmap <leader>a <Esc>:Ack!
