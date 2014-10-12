@@ -25,3 +25,6 @@
 [submodule "_vim/bundle/splice"]
 	path = _vim/bundle/splice
 	url = https://github.com/sjl/splice.vim.git
+[submodule "_vim/bundle/python-mode"]
+	path = _vim/bundle/python-mode
+	url = https://github.com/klen/python-mode.git
