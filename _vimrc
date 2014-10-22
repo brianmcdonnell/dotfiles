@@ -98,6 +98,11 @@ nnoremap <F2> :set nonumber!<CR>
 map <leader>f :NERDTreeToggle<CR>
 let NERDTreeIgnore=['\.pyc','env','migrations', '_trial_temp']
 
+if executable('ag')
+    let g:ctrlp_user_command='ag %s --files-with-matches --nocolor --hidden -g ""'
+    let g:ctrlp_use_caching=0
+endif
+
 " Toggle Gundo (list of recent edits you can revert)
 map <leader>g :GundoToggle<CR>
 
