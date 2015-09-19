@@ -116,32 +116,6 @@ function underscore_files()
     done
 }
 
-# Compares the available ruby version with the versions needed by vim/gvim.
-# This comparison cannot be done for gvim on Windows.
-function compare_ruby_versions() {
-    if [ $os_name == "CYGWIN" ] && [ $2 == 'gvim' ]; then
-        warn "Unable to auto detect which version of ruby gvim is compiled for on windows."
-        warn "Run 'gvim --version' and search for '-DDYNAMIC_RUBY_VER=' to check manually."
-        return 0
-    fi
-
-    vim_ruby_ver=`$2 --version | grep -io "ruby[0-9\.]*" | sort | tail -n 1`
-    if [ $vim_ruby_ver ]; then
-        echo -n "$2 requires:   "
-        info "\t$vim_ruby_ver"
-    else
-        error "$2 not compiled for ruby."
-        return 2
-    fi
-
-    if [ $1 == $vim_ruby_ver ]; then
-        echo -n "$2 ruby"
-        success " [OK]"
-        return 0
-    fi
-    return 1
-}
-
 # This script needs the following tools to be available in the system path.
 script_reqs=(   "grep"
                 "sed"
@@ -183,53 +157,8 @@ fi
 plugin_reqs=(   "ack"       # Used by vim Ack plugin
                 "pydoc"     # Used by vim Pydoc plugin
                 "pep8"      # Used by PEP8 plugin
-                "ruby"      # Used by vim Command-T plugin
+                "ag"        # Used by vim ctrl-p plugin
                 );
-
-# If ruby is in the requirements we need to check the
-# version of ruby that vim is compiled against.
-ruby_required=false
-for i in ${plugin_reqs[@]}; do
-    if [[ $i == "ruby" ]] ; then
-        ruby_required=true;
-    fi;
-done
-
-# Validate installed ruby version against those that vim & gvim are compiled against.
-if [ $ruby_required == true ] ; then
-    info "Checking ruby availability"
-    ruby_ver=`ruby --version | grep -o "\bruby [0-9\.]*" | sed "s/ruby /ruby/"`
-    if [ $ruby_ver ]; then
-        echo -n "ruby available: "
-        info "\t$ruby_ver"
-    else
-        error "Ruby is required but unavailable"
-        exit 1
-    fi
-
-    # Find out which (if any) version of ruby vim/gvim are compiled against
-    if $vim_exists; then
-        compare_ruby_versions $ruby_ver 'vim'
-        vim_ruby_ok=$?
-    fi
-    if $gvim_exists; then
-        gvim_ruby_ok=true
-        if [ $os_name != "CYGWIN" ] ; then
-            compare_ruby_versions $ruby_ver 'gvim'
-            gvim_ruby_ok=$?
-        fi
-    fi
-
-    if [ $vim_ruby_ok == 2 ] && [ $gvim_ruby_ok == 2 ]; then
-        error "Neither vim nor gvim are compiled with ruby support."
-    fi
-
-    if [ $vim_ruby_ok != 0 ] || [ $gvim_ruby_ok != 0 ]; then
-        warn "Inexact match. vim/gvim plugins relying on ruby may not work correctly."
-    fi
-else
-    info "Skipping ruby validation as it's not required by bundle plugins."
-fi
 
 # Check that all external programs needed by the bundles are available in the system path.
 info "Checking bundle dependencies"
@@ -250,25 +179,6 @@ fi
 git submodule update --init --recursive
 if [ "$?" != 0 ]; then
     error "git submodule update failed."
-    exit 1
-fi
-
-# Check that the Command-T ruby extensions are compiled.
-if [ ! -f "./_vim/bundle/command-t/ruby/command-t/ext.so" ]; then
-    error "Command-T ruby extension has not been compiled"
-    if [ $os_name == "CYGWIN" ]; then
-        error "Please install ruby dev kit: http://rubyinstaller.org/add-ons/devkit/"
-        error "Run"
-        error "> c: rubydevkit\devkitvars.bat"
-        error "> cd .\_vim\bundle\command-t\ruby\command-t"
-        error "> ruby 'extconf.rb'"
-        error "> make clean"
-        error "> make"
-    else
-        error "Run"
-        error "$ cd ./_vim/bundle/command-t/ruby/command-t"
-        error "$ rake make"
-    fi
     exit 1
 fi
 
