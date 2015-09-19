@@ -47,3 +47,8 @@ fi
 if [ -f ~/.nvm/nvm.sh ]; then
     . ~/.nvm/nvm.sh
 fi
+
+# Support for __git_ps1 prompt
+if [ -f ~/.git-prompt.sh ]; then
+    . ~/.git-prompt.sh
+fi
