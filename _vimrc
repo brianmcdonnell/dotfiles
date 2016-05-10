@@ -152,6 +152,8 @@ function! DeleteHiddenBuffers()
 endfunction
 map <leader>D :call DeleteHiddenBuffers()<CR>
 
+set completeopt=menu
+
 " Add the virtualenv's site-packages to vim path
 python << EOF
 import os.path
@@ -164,3 +166,9 @@ if 'VIRTUAL_ENV' in os.environ:
     'bin/activate_this.py')
     execfile(activate_this, dict(__file__=activate_this))
 EOF
+if &diff
+    highlight DiffAdd cterm=none ctermfg=bg ctermbg=Green gui=none guifg=bg guibg=Green
+    highlight DiffDelete cterm=none ctermfg=bg ctermbg=Red gui=none guifg=bg guibg=Red
+    highlight DiffChange cterm=none ctermfg=bg ctermbg=Yellow gui=none guifg=bg guibg=Yellow
+    highlight DiffText cterm=none ctermfg=bg ctermbg=Magenta gui=none guifg=bg guibg=Magenta
+endif
