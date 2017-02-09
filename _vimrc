@@ -24,14 +24,19 @@ filetype plugin indent on
 set foldmethod=indent
 set foldlevel=99
 
+set noswapfile
+
 " autoindent        Match indent level from previous line
 " expandtab         Uses spaces instead of tab upon a <Tab> keystroke
 " smarttab          Uses shiftwidth at the start of lines instead of tabstop
 " tabstop           changes the nunber of spaces use to display a tab character
 " shiftwidth        Number of spaces to move by when indenting/outdenting
 " formatoptions     each letter represents a formatting rule (see help: fo-table)
+autocmd BufNewFile,BufRead *.gyp set filetype=python
+autocmd BufNewFile,BufRead *.gypi set filetype=python
 autocmd FileType * setlocal tabstop=4 shiftwidth=4
 autocmd BufEnter *.py setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
+autocmd BufEnter *.js setlocal autoindent shiftwidth=4 tabstop=4 smarttab expandtab formatoptions=croql
 autocmd BufEnter *.conf setlocal filetype=conf autoindent shiftwidth=4 tabstop=4 smarttab expandtab nolist formatoptions=croql
 autocmd BufEnter *.xml setlocal filetype=xml autoindent shiftwidth=4 tabstop=4 smarttab expandtab nolist formatoptions=croql
 autocmd BufRead,BufNewFile *.as setlocal filetype=actionscript
@@ -58,7 +63,7 @@ map <C-Tab> <Esc>:bnext!<CR>
 map <C-S-Tab> <Esc>:bprevious!<CR>
 
 " Generally ignore these file types in file listings.
-set wildignore+=*.o,*.obj,.git,*.pyc,*.sqlite,*.sqlite3
+set wildignore+=*.o,*.obj,.git,*.pyc,*.sqlite,*.sqlite3,tags
 
 " Disable text wrapping
 set nowrap
