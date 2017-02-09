@@ -54,6 +54,11 @@ let mapleader = ","
 " Keystroke namespace used for filetype-specific commands
 let maplocalleader = "\\"
 
+" Cursor lands below when doing a split
+set splitbelow
+" Cursor lands to the right when doing a vsplit
+set splitright
+
 " Alt-arrows to navigate between buffers
 map <A-left> <C-W>h
 map <A-right> <C-W>l
