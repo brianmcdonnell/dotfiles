@@ -154,6 +154,8 @@ function user_host()
     fi
 }
 
+TIME_PROMPT="${CYAN}\d \D{%T}${CLR}"
+
 function prompt_command() {
     # If this is an xterm set the title to user@host:dir
     case "$TERM" in
@@ -166,7 +168,7 @@ function prompt_command() {
 
     # Function to render the prompt each time it's outputted in the terminal.
     if [ "$color_prompt" = yes ]; then
-        PS1="\n${GREEN}${debian_chroot:+($debian_chroot)}$(user_host) ${WHITE}\w$(vir_env) $(git_ps1)"'$(hg_ps1 "yes")'"${CLR}\n\\$ "
+        PS1="\n${GREEN}${debian_chroot:+($debian_chroot)}${TIME_PROMPT} $(user_host) ${WHITE}\w$(vir_env) $(git_ps1)"'$(hg_ps1 "yes")'"${CLR}\n\\$ "
     else
         PS1="\n${debian_chroot:+($debian_chroot)}\u@\H \w$(vir_env) $(git_ps1)"'$(hg_ps1)'"\n\\$ "
     fi
