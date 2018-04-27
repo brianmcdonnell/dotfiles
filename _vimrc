@@ -14,6 +14,7 @@ Plugin 'fholgado/minibufexpl.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'sjl/splice.vim'
 Plugin 'derekwyatt/vim-scala'
+Plugin 'sickill/vim-monokai'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -33,9 +34,9 @@ filetype plugin indent on    " required
 
 " Set colors depending on gvim or vim
 if has("gui_running")
-    colorscheme desert
+    colorscheme monokai
 else
-    colorscheme torte
+    colorscheme monokai
 endif
 
 " Maximize GVim on start
