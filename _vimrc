@@ -1,7 +1,35 @@
-filetype off
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
-call pathogen#helptags()
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'sjl/splice.vim'
+Plugin 'derekwyatt/vim-scala'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
 
 " Set colors depending on gvim or vim
 if has("gui_running")
@@ -113,24 +141,8 @@ if executable('ag')
     let g:ctrlp_use_caching=0
 endif
 
-" Toggle Gundo (list of recent edits you can revert)
-map <leader>g :GundoToggle<CR>
-
-" TaskList of TODOs and FIXMEs
-map <leader>td <Plug>TaskList
-
-" Supertab code completion
-au FileType python set omnifunc=pythoncomplete#Complete
-let g:SuperTabDefaultCompletionType = "context"
-set completeopt=menuone,longest,preview
-
 " Validate code against PEP8
 let g:pep8_map='<leader>8'
-
-" Jump to definition
-map <leader>d :RopeGotoDefinition<CR>
-" Rename occurances of...
-map <leader>r :RopeRename<CR>
 
 " Fuzzy search in code
 nmap <leader>a <Esc>:Ack!
@@ -163,22 +175,3 @@ endfunction
 map <leader>D :call DeleteHiddenBuffers()<CR>
 
 set completeopt=menu
-
-" Add the virtualenv's site-packages to vim path
-python << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir,
-    'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
-if &diff
-    highlight DiffAdd cterm=none ctermfg=bg ctermbg=Green gui=none guifg=bg guibg=Green
-    highlight DiffDelete cterm=none ctermfg=bg ctermbg=Red gui=none guifg=bg guibg=Red
-    highlight DiffChange cterm=none ctermfg=bg ctermbg=Yellow gui=none guifg=bg guibg=Yellow
-    highlight DiffText cterm=none ctermfg=bg ctermbg=Magenta gui=none guifg=bg guibg=Magenta
-endif
