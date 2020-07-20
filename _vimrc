@@ -85,7 +85,6 @@ noremap <leader>l :set list!<CR>
 set wildignore+=*.o,*.obj,.git,*.pyc,*.sqlite,*.sqlite3,tags  " Generally ignore these file types in file listings.
 set completeopt=menu
 
-" Map Alt-L for NerdTree
 map <leader>f :NERDTreeToggle<CR>
 let NERDTreeIgnore=['\.pyc','env','migrations']
 
