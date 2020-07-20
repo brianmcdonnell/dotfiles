@@ -1,0 +1,5 @@
+alias grep='grep --color=auto'
+alias cgrep='grep -I --color=auto --exclude=tags --exclude=*unittest.cc --exclude-dir=examples --exclude=test* --exclude=*_test.cc'
+alias pygrep='grep -rn --exclude=\*svn\* --exclude-dir=\*migrations\* --exclude=\*.min.js\* --exclude=\*.min.css\* --exclude=\*~\*  --exclude=\*.tmp\* --exclude=entries --exclude=all-wcprops --exclude=\*.txt\* --exclude=\*.pyc\* --exclude=\*.swp\* --exclude-dir=\.ropeproject --exclude=\*.log\* --exclude-dir=\env\* --exclude-dir=third_party --exclude-dir=\htmlcov\*'
+alias htmlgrep='grep -irn --include=\*.html'
+alias pcat='pygmentize -O bg=dark'

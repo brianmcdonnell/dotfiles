@@ -13,7 +13,6 @@ Plugin 'mileszs/ack.vim'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'sjl/splice.vim'
-Plugin 'derekwyatt/vim-scala'
 Plugin 'sickill/vim-monokai'
 
 " All of your Plugins must be added before the following line
@@ -31,30 +30,6 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-
-" Set colors depending on gvim or vim
-if has("gui_running")
-    colorscheme monokai
-else
-    colorscheme monokai
-endif
-
-" Maximize GVim on start
-if has("gui_running")
-  set lines=999 columns=999
-endif
-
-" Enable syntax highlighting
-syntax on
-" Filtype detection, load plugin files, load indent files
-filetype plugin indent on
-
-" Enable code folding
-set foldmethod=indent
-set foldlevel=99
-
-set noswapfile
-
 " autoindent        Match indent level from previous line
 " expandtab         Uses spaces instead of tab upon a <Tab> keystroke
 " smarttab          Uses shiftwidth at the start of lines instead of tabstop
@@ -66,97 +41,62 @@ autocmd BufEnter *.py setlocal autoindent shiftwidth=4 tabstop=4 smarttab expand
 autocmd BufEnter *.js setlocal autoindent shiftwidth=2 tabstop=2 smarttab expandtab
 autocmd BufEnter *.html setlocal autoindent shiftwidth=2 tabstop=2 smarttab expandtab
 
-" Keystroke namespace under which to map global user-defined commands.
-let mapleader = ","
-
-" Keystroke namespace used for filetype-specific commands
-let maplocalleader = "\\"
-
-" show the matching part of the pair for [] {} and ()
-set showmatch
-
-" Cursor lands below when doing a split
-set splitbelow
-" Cursor lands to the right when doing a vsplit
-set splitright
-
 " Alt-arrows to navigate between buffers
 map <A-left> <C-W>h
 map <A-right> <C-W>l
 map <A-up> <C-W>k
 map <A-down> <C-W>j
+" Ctrl-tab through buffers
 map <C-Tab> <Esc>:bnext!<CR>
 map <C-S-Tab> <Esc>:bprevious!<CR>
 
-" Generally ignore these file types in file listings.
-set wildignore+=*.o,*.obj,.git,*.pyc,*.sqlite,*.sqlite3,tags
-
-" Disable text wrapping
-set nowrap
-" Wrap toggle on/off
-map <leader>w :set wrap!<bar>set wrap?<CR>
-
-" Enable search highlighting
-set hlsearch
-" Search highlighting toggle on/off
-map <leader>h :set hlsearch!<bar>set hlsearch?<CR>
-
-" Show red background for code over 80 chars long
-" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-" match OverLength /\%81v.\+/
-" A vertical line highlighting long lines
-if exists("+colorcolumn")
+colorscheme monokai
+if exists("+colorcolumn")  " A vertical line highlighting long lines
     set colorcolumn=80,120
     hi colorcolumn ctermbg=black guibg=#383838
 endif
 
-" Case-insensitive searches
-set ignorecase
-
-" Enable backspace
-set bs=2
-
-" Turn on line numbers
-set number
-
-" Mouse enabled in all modes
-set mouse=a
-
-" Toggle line numbers and fold column for easy copying:
+syntax on  " Enable syntax highlighting
+set bs=2  " Enable backspace
+set mouse=a  " Mouse enabled in all modes
+let mapleader = ","
+let maplocalleader = "\\"
+set noswapfile
+set nowrap  " Disable text wrapping
+" Wrap toggle on/off
+map <leader>w :set wrap!<bar>set wrap?<CR>
+set foldmethod=indent  " Folding should apply to indented blocks
+set foldlevel=99  " Fold any blocks deeper than 99 when opening file
+set number  " Turn on line numbers
+" Toggle line numbers and fold column for easy copying
 nnoremap <F2> :set nonumber!<CR>
+set hlsearch  " Enable search highlighting
+" Search highlighting toggle on/off
+map <leader>h :set hlsearch!<bar>set hlsearch?<CR>
+set ignorecase  " Case-insensitive searches
+set showmatch  " Show the matching part of the pair for [] {} and ()
+set splitbelow  " Open new buffer below
+set splitright  " Open new buffer to the right
+" Show tabs as arrows and trailing spaces as dots
+set list listchars=tab:→\ ,trail:·
+command! NoTrails %s/\s\+$//  " Remove trailing whitespace
+" Toggle showing whitespace as listchars
+noremap <leader>l :set list!<CR>
+set wildignore+=*.o,*.obj,.git,*.pyc,*.sqlite,*.sqlite3,tags  " Generally ignore these file types in file listings.
+set completeopt=menu
 
 " Map Alt-L for NerdTree
 map <leader>f :NERDTreeToggle<CR>
-let NERDTreeIgnore=['\.pyc','env','migrations', '_trial_temp']
+let NERDTreeIgnore=['\.pyc','env','migrations']
 
 if executable('ag')
     let g:ctrlp_user_command='ag %s --files-with-matches --nocolor --hidden -g ""'
     let g:ctrlp_use_caching=0
 endif
 
-" Validate code against PEP8
-let g:pep8_map='<leader>8'
-
+let g:pep8_map='<leader>8'  " Validate code against PEP8
 " Fuzzy search in code
 nmap <leader>a <Esc>:Ack!
-
-" Show tabs as arrows and trailing spaces as dots
-if has("win32")
-    set list listchars=tab:�\ ,trail:�
-else
-    set list listchars=tab:→\ ,trail:·
-endif
-noremap <leader>l :set list!<CR>
-
-if has("win32")
-    map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
-    set guifont=dejavu_sans_mono:h11
-endif
-
-" Remove trailing whitespace
-command! NoTrails %s/\s\+$//
-" Alternative method of removing trailing whitespace
-" nnoremap<leader>ws :%s/\s\+$//<cr>:let @/=''<CR>
 
 function! DeleteHiddenBuffers()
     let tpbl=[]
@@ -166,5 +106,3 @@ function! DeleteHiddenBuffers()
     endfor
 endfunction
 map <leader>D :call DeleteHiddenBuffers()<CR>
-
-set completeopt=menu

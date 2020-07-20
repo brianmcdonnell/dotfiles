@@ -1,16 +1,11 @@
 [user]
     name = Brian McDonnell
-    # Default to personal identity.  Override this in work projects
-    # with work email address.
     email = mcdonnellb@gmail.com
 
 [core]
     # Editor to use for any git commands that seek input (e.g. commit, tag)
-    editor = vim
-    # Ignore patterns in this file across all projects.
-    # While any filename can be used .cvsignore is handy as it's also
-    # used by other utils such as rsync.
-    excludesfile = ~/.cvsignore
+    editor = nvim
+    excludesfile = ~/.gitignore
 
 [merge]
     tool = splice
@@ -19,7 +14,7 @@
     keepBackup = false
 
 [mergetool "splice"]
-    cmd = "gvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
+    cmd = "nvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
     trustExitCode = true
 
 [alias]
