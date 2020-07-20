@@ -1,6 +1,13 @@
-[user]
-    name = Brian McDonnell
-    email = mcdonnellb@gmail.com
+# Add lines 4-9 to ~/.gitconfig.
+# Update include path to point to this file.
+
+# [user]
+#     name = Brian McDonnell
+#     email = name@example.com
+#
+# [include]
+#     path = ~/source/personal/dotfiles/_gitconfig
+
 
 [core]
     # Editor to use for any git commands that seek input (e.g. commit, tag)
