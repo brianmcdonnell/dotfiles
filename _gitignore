@@ -1,5 +1,4 @@
 doc/tags
-sdf_autoload
 *.pyc
 *.swp
 env/
